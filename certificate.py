@@ -25,12 +25,13 @@ class ScannedCertificate:
                 return str_item.replace("CN=", "")
 
     def to_string(self):
-        return f"Common name:               {self.common_name} \n" \
-               f"Issuer common name:        {self.issuer_common_name} \n" \
-               f"Port:                      {self.port} \n" \
-               f"Subject Alternative Names: {', '.join(map(str, self.subject_alternative_names))} \n" \
-               f"Not Valid Before:           {self.not_valid_before} \n"
-               f"Not Valid After:           {self.not_valid_after} \n"
+        san_string = ', '.join(map(str, self.subject_alternative_names))
+        return f"Common name:                   {self.common_name} \n" \
+               f"Issuer common name:            {self.issuer_common_name} \n" \
+               f"Port:                          {self.port} \n" \
+               f"Subject Alternative Names:     {san_string} \n" \
+               f"Not Valid Before:              {self.not_valid_before} \n" \
+               f"Not Valid After:               {self.not_valid_after} \n"
 
     def __read_sans_from_cert(self, cert):
         SANs = cert.extensions.get_extension_for_oid(
