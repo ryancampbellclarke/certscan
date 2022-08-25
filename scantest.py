@@ -7,7 +7,7 @@ import sys
 from certificate import ScannedCertificate
 
 #target = "yukon.ca"
-target = "expired.badssl.com"
+target = "example.com"
 port = 443
 # create default context
 context = ssl.create_default_context()

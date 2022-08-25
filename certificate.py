@@ -16,12 +16,21 @@ class ScannedCertificate:
     signature_hash_algorithm: str
     version: str
     subject_alternative_names: List[str] = []
+    port: int = 443
 
     def __common_name_from_cert(self, cert):
         for item in cert.subject.rdns:
             str_item = item.rfc4514_string()
             if str_item.startswith("CN="):
                 return str_item.replace("CN=", "")
+
+    def to_string(self):
+        return f"Common name:               {self.common_name} \n" \
+               f"Issuer common name:        {self.issuer_common_name} \n" \
+               f"Port:                      {self.port} \n" \
+               f"Subject Alternative Names: {', '.join(map(str, self.subject_alternative_names))} \n" \
+               f"Not Valid Before:           {self.not_valid_before} \n"
+               f"Not Valid After:           {self.not_valid_after} \n"
 
     def __read_sans_from_cert(self, cert):
         SANs = cert.extensions.get_extension_for_oid(
@@ -37,7 +46,7 @@ class ScannedCertificate:
             if str_item.startswith("CN="):
                 return str_item.replace("CN=", "")
 
-    def __init__(self, cert: Certificate):
+    def __init__(self, cert: Certificate, port: int = 443):
         self.subject = cert.subject.rfc4514_string()
         self.common_name = self.__common_name_from_cert(cert)
         self.issuer = cert.issuer.rfc4514_string()
@@ -48,3 +57,4 @@ class ScannedCertificate:
         self.signature_hash_algorithm = cert.signature_hash_algorithm.name
         self.version = cert.version.name
         self.subject_alternative_names = self.__read_sans_from_cert(cert)
+        self.port = port

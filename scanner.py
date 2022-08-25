@@ -30,8 +30,10 @@ class Scanner:
     scan_target: List[ipaddress.ip_address]
     port_scan_method: PortScanMethod
     port_scan_target: List[int] = []
+    quiet: bool = False
 
-    def __scan(self, target, port):
+    @staticmethod
+    def scan(target, port):
         context = ssl.create_default_context()
         # set context so it can receive valid certificate
         context.check_hostname = False
@@ -42,7 +44,7 @@ class Scanner:
                                      server_hostname=target) as wrapped_sock:
                 der_cert = wrapped_sock.getpeercert(True)
                 cert = x509.load_der_x509_certificate(der_cert)
-                return ScannedCertificate(cert)
+                return ScannedCertificate(cert, port)
 
     def __nmap_port_discovery(self):
         # TODO Implement NMAP port discovery
@@ -59,9 +61,19 @@ class Scanner:
         if self.port_scan_method == PortScanMethod.nmap:
             ports = self.__nmap_port_discovery()
         elif self.port_scan_method == PortScanMethod.specific_ports:
-            ports = self.scan_target
+            ports = self.port_scan_target
         else:
             ports = [int(DEFAULT_PORT_TARGET)]
+
+        discovered_certs = []
+        for target in targets:
+            for port in ports:
+                discovered_cert = Scanner.scan(target, port)
+                discovered_certs.append(discovered_cert)
+                if not self.quiet:
+                    print(discovered_cert.to_string())
+
+        return discovered_certs
 
     def __convert_scan_target_str_to_list(self, scan_target: str,
                                           scan_method: ScanMethod):
@@ -98,10 +110,12 @@ class Scanner:
 
     def __init__(self, scan_method: ScanMethod, scan_target: str,
                  port_scan_method: PortScanMethod,
-                 port_scan_target: str):
+                 port_scan_target: str,
+                 quiet: bool=False):
         self.scan_method = scan_method
         self.port_scan_method = port_scan_method
         self.scan_target = self.__convert_scan_target_str_to_list(scan_target,
                                                                   scan_method)
         self.port_scan_target = self.__convert_port_scan_target_str_to_list(
             port_scan_target)
+        self.quiet = quiet
