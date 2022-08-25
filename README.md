@@ -16,7 +16,7 @@ Run a single scan by passing one of the following scan types:
 
 `-d` or `--domains` expects a list of domains separated by `,`
 
-and either 
+and optionally (if not specified, it defaults to `--ports 443`) 
 
 `-p` or `--ports` to specify ports to scan in the form separated by `,`
 
@@ -25,6 +25,8 @@ or
 `-n` or `--nmap` to scan for open ports with nmap, then scan for certificates on those open ports
 
 Examples:
+
+`certscan --single 10.10.10.10 --ports 443`
 
 `certscan --cidr 10.10.10.0/24 --ports 443,636`
 

@@ -76,3 +76,5 @@ def parse_port_scan_input(args):
         return (scanner.PortScanMethod.nmap, None)
     elif args.ports:
         return (scanner.PortScanMethod.specific_ports, args.ports)
+    else:
+        return (scanner.PortScanMethod.specific_ports, scanner.DEFAULT_PORT_TARGET)

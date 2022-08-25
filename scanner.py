@@ -15,12 +15,14 @@ class ScanMethod(int, Enum):
     range = 2,
     domains = 3
 
+DEFAULT_PORT_TARGET = "443"
 
 class Scanner():
     scan_method: ScanMethod
     scan_target: List[ipaddress.ip_address]
     port_scan_method: PortScanMethod
     port_scan_target: List[int] = []
+
 
     def __convert_scan_target_str_to_list(self, scan_target: str, scan_method: ScanMethod):
         targets: List[ipaddress.ip_address] = []
