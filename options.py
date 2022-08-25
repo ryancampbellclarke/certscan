@@ -1,4 +1,4 @@
-import scan
+import scanner
 
 """
 Helper functions to implement command line options and to organize them for further parsing.

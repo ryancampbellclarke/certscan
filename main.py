@@ -1,6 +1,6 @@
 import argparse
 
-from scan import Scan
+from scanner import Scanner
 import options
 
 
@@ -14,9 +14,9 @@ if __name__ == '__main__':
     (scan_method, scan_target) = options.parse_scan_input(args)
     (port_scan_method, port_scan_target) = options.parse_port_scan_input(args)
 
-    scan = Scan(scan_method,scan_target,port_scan_method,port_scan_target)
+    scanner = Scanner(scan_method, scan_target, port_scan_method, port_scan_target)
 
-    print(scan.scan_target)
-    print(scan.scan_method)
-    print(scan.port_scan_target)
-    print(scan.port_scan_method)
+    print(scanner.scan_target)
+    print(scanner.scan_method)
+    print(scanner.port_scan_target)
+    print(scanner.port_scan_method)

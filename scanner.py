@@ -16,7 +16,7 @@ class ScanMethod(int, Enum):
     domains = 3
 
 
-class Scan():
+class Scanner():
     scan_method: ScanMethod
     scan_target: List[ipaddress.ip_address]
     port_scan_method: PortScanMethod
