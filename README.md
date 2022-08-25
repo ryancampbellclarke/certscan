@@ -22,6 +22,10 @@ and optionally (if not specified, it defaults to `--ports 443`) one of these por
 
 `-n` or `--nmap` to scan for open ports with nmap, then scan for certificates on those open ports
 
+Set `-q` or `--quiet` to prevent certificates from printing to std
+
+Set `--csv` to have the certificates printed to the default output location `output/certificates.csv`
+
 Examples:
 
 `certscan --single 10.10.10.10 --ports 443`
@@ -35,3 +39,7 @@ Examples:
 ### Scheduled mode
 
 Modify the `config.ini` configuration and run `certscan` without any arguments.
+
+## Build
+
+`python setup.py py2exe`
