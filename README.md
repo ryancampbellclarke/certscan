@@ -22,9 +22,12 @@ and optionally (if not specified, it defaults to `--ports 443`) one of these por
 
 `-n` or `--nmap` to scan for open ports with nmap, then scan for certificates on those open ports
 
+Optional parameters:
+
 Set `-q` or `--quiet` to prevent certificates from printing to std
 
-Set `--csv` to have the certificates printed to the default output location `output/certificates.csv`
+Set `-o` or `--output` to have the certificates printed to a CSV. If no path is passed the file will be created at `output/certificates.csv`
+
 
 Examples:
 

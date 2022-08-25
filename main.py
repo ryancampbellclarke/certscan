@@ -1,23 +1,25 @@
 import argparse
 import csv
 import os
+from os.path import dirname
 
 from src.scanner import Scanner
 from src import options
 
 DEFAULT_OUTPUT_FOLDER = "output/"
-DEFAULT_FILE_OUT = "output/certificates.csv"
+DEFAULT_FILE_OUT = f"{DEFAULT_OUTPUT_FOLDER}certificates.csv"
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
+    parser = options.scan_type_group(parser)
+    parser = options.port_scan_group(parser)
     parser.add_argument("-q", "--quiet", action='store_true',
                         help="Turn off printing discovered certificates to"
                              " stdout")
-    parser.add_argument("--csv", action='store_true',
-                        help="Output discovered certificates to "
-                             "output/certificates.csv")
-    parser = options.scan_type_group(parser)
-    parser = options.port_scan_group(parser)
+    parser.add_argument("-o", "--output", nargs='?', const=DEFAULT_FILE_OUT,
+                        help=f"Output discovered certificates to "
+                             f"{DEFAULT_FILE_OUT}"
+                             f" or specified path")
     args = parser.parse_args()
 
     if options.no_scan_type([args.cidr, args.single, args.domains, args.range]):
@@ -40,15 +42,14 @@ if __name__ == '__main__':
 
         discovered_certs = scanner.start_scan()
 
-        # TODO implement different output path
-        if args.csv:
+        if args.output:
             # write to csv
             try:
-                os.mkdir(DEFAULT_OUTPUT_FOLDER)
+                os.mkdir(dirname(args.output))
             except:
                 # Dir already exists
                 pass
-            with open(DEFAULT_FILE_OUT, "w", newline="") as csvfile:
+            with open(args.output, "w", newline="") as csvfile:
                 writer = csv.writer(csvfile)
                 writer.writerow(
                     ['subject', 'common_name', 'issuer', 'issuer_common_name',
