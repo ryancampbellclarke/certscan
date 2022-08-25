@@ -7,7 +7,7 @@ import ssl
 
 from cryptography.hazmat._oid import ExtensionOID
 
-from certificate import ScannedCertificate
+from src.certificate import ScannedCertificate
 
 
 class PortScanMethod(int, Enum):

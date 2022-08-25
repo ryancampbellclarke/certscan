@@ -2,8 +2,8 @@ import argparse
 import csv
 import os
 
-from scanner import Scanner
-import options
+from src.scanner import Scanner
+from src import options
 
 DEFAULT_OUTPUT_FOLDER = "output/"
 DEFAULT_FILE_OUT = "output/certificates.csv"
