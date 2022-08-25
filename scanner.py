@@ -44,16 +44,17 @@ class Scanner():
         return targets
 
     def __convert_port_scan_target_str_to_list(self, port_scan_target):
-        try:
-            target = [int(port) for port in port_scan_target.split(',')]
-        except:
-            raise ValueError("Non-integer in list of ports")
-        return target
+        if port_scan_target:
+            try:
+                return [int(port) for port in port_scan_target.split(',')]
+            except:
+                raise ValueError("Non-integer in list of ports")
+        else:
+            return None
 
     def __init__(self, scan_method: ScanMethod, scan_target: str, port_scan_method: PortScanMethod,
                  port_scan_target: str):
         self.scan_method = scan_method
         self.port_scan_method = port_scan_method
         self.scan_target = self.__convert_scan_target_str_to_list(scan_target, scan_method)
-        if port_scan_target is not None:
-            self.port_scan_target = self.__convert_port_scan_target_str_to_list(port_scan_target)
+        self.port_scan_target = self.__convert_port_scan_target_str_to_list(port_scan_target)
