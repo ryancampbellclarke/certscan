@@ -40,7 +40,7 @@ class Scanner:
                 ip_range = [ipaddress.IPv4Address(ip) for ip in scan_target.split('-')]
                 start_ip = ip_range[0]
                 end_ip = ip_range[1]
-                for ip_int in range(int(start_ip), int(end_ip)):
+                for ip_int in range(int(start_ip), int(end_ip)+1):
                     targets.append(str(ipaddress.IPv4Address(ip_int)))
                 return targets
             except ValueError as e:
