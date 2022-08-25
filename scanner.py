@@ -1,7 +1,6 @@
 import ipaddress
-import string
 from enum import Enum
-from typing import List, Any
+from typing import List
 
 
 class PortScanMethod(int, Enum):
@@ -15,14 +14,19 @@ class ScanMethod(int, Enum):
     range = 2,
     domains = 3
 
+
 DEFAULT_PORT_TARGET = "443"
 
-class Scanner():
+
+class Scanner:
     scan_method: ScanMethod
     scan_target: List[ipaddress.ip_address]
     port_scan_method: PortScanMethod
     port_scan_target: List[int] = []
 
+    def start_scan(self):
+        # TODO implement scanner
+        pass
 
     def __convert_scan_target_str_to_list(self, scan_target: str, scan_method: ScanMethod):
         targets: List[ipaddress.ip_address] = []
@@ -39,8 +43,8 @@ class Scanner():
                 for ip_int in range(int(start_ip), int(end_ip)):
                     targets.append(str(ipaddress.IPv4Address(ip_int)))
                 return targets
-            except:
-                ValueError("The string expected should be IPv4 addresses of the form x.x.x.x-x.x.x.x")
+            except ValueError as e:
+                print(e)
         elif scan_method == ScanMethod.domains:
             return [domain for domain in scan_target.split(',')]
         return targets
@@ -49,8 +53,8 @@ class Scanner():
         if port_scan_target:
             try:
                 return [int(port) for port in port_scan_target.split(',')]
-            except:
-                raise ValueError("Non-integer in list of ports")
+            except ValueError as e:
+                print(e)
         else:
             return None
 
