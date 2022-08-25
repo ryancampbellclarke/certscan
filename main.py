@@ -25,8 +25,6 @@ if __name__ == '__main__':
         parser.print_help(sys.stderr)
         sys.exit(1)
 
-    print("args.database: " + str(args.database))
-
     if args.database:
         # TODO read database (defined in config.ini) for scanner configuration
         raise NotImplementedError(

@@ -12,22 +12,25 @@ Run a single scan by passing one of the following scan types:
 
 `-c` or `--cidr` expects an IPv4 subnet in CIDR notation
 
-`-r` or `--range` expects the start and end IPv4 addresses of a range of IPv4 addresses separated by `-`
+`-r` or `--range` expects the start and end IPv4 addresses of a range of IPv4
+addresses separated by `-`
 
 `-d` or `--domains` expects a list of domains separated by `,`
 
-and optionally (if not specified, it defaults to `--ports 443`) one of these port scan types:
+and optionally (if not specified, it defaults to `--ports 443`) one of these
+port scan types:
 
 `-p` or `--ports` to specify ports to scan in the form separated by `,`
 
-`-n` or `--nmap` to scan for open ports with nmap, then scan for certificates on those open ports
+`-n` or `--nmap` to scan for open ports with nmap, then scan for certificates on
+those open ports
 
 Optional parameters:
 
 Set `-q` or `--quiet` to prevent certificates from printing to std
 
-Set `-o` or `--output` to have the certificates printed to a CSV. If no path is passed the file will be created at `output/certificates.csv`
-
+Set `-o` or `--output` to have the certificates printed to a CSV. If no path is
+passed the file will be created at `output/certificates.csv`
 
 Examples:
 
@@ -43,11 +46,13 @@ Examples:
 
 #### Config
 
-set `-i` or `--ini`: Modifies the `config.ini` configuration and run `certscan -i` without any arguments.
+set `-i` or `--ini`: Modifies the `config.ini` configuration and
+run `certscan -i` without any arguments.
 
 #### Database
 
-set `-db` or `--database`: Connects to `database.ini` to discover scanner information.
+set `-db` or `--database`: Connects to `database.ini` to discover scanner
+information.
 
 ## Build
 
