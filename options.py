@@ -4,6 +4,19 @@ import scanner
 Helper functions to implement command line options and to organize them for further parsing.
 """
 
+
+def no_scan_type(args):
+    """
+    Checks if all scan_type args are None
+    :param args: Parsed args from an ArgumentParser
+    :return: False if no scan type was passed
+    """
+    if all(arg is None for arg in args):
+        return True
+    else:
+        return False
+
+
 def scan_type_group(parser):
     """
     Sets up Scan Type arguments related to configuring a certscan run
@@ -18,6 +31,8 @@ def scan_type_group(parser):
                        help="Scan inclusively the range of two IP addresses delimited by '-'")
     group.add_argument("-d", "--domains", type=str,
                        help="Scan inclusively a list of domains separated by `,`")
+    group.add_argument("-db", "--database", action='store_true',
+                       help="Read scanner configuration from database defined in config.ini")
     return parser
 
 
@@ -42,13 +57,13 @@ def parse_scan_input(args):
     :return: tuple with the ScanMethod and the details of the scan method
     """
     if args.single:
-        return (scan.ScanMethod.single, args.single)
+        return (scanner.ScanMethod.single, args.single)
     elif args.cidr:
-        return (scan.ScanMethod.cidr, args.cidr)
+        return (scanner.ScanMethod.cidr, args.cidr)
     elif args.range:
-        return (scan.ScanMethod.range, args.range)
+        return (scanner.ScanMethod.range, args.range)
     elif args.domains:
-        return (scan.ScanMethod.domains, args.domains)
+        return (scanner.ScanMethod.domains, args.domains)
 
 
 def parse_port_scan_input(args):
@@ -58,6 +73,6 @@ def parse_port_scan_input(args):
     :return:
     """
     if args.nmap:
-        return (scan.PortScanMethod.nmap, None)
+        return (scanner.PortScanMethod.nmap, None)
     elif args.ports:
-        return (scan.PortScanMethod.specific_ports, args.ports)
+        return (scanner.PortScanMethod.specific_ports, args.ports)
