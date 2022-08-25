@@ -7,6 +7,8 @@ import ssl
 
 from cryptography.hazmat._oid import ExtensionOID
 
+from certificate import ScannedCertificate
+
 
 class PortScanMethod(int, Enum):
     nmap = 0,
@@ -40,28 +42,15 @@ class Scanner:
                 der_cert = wrapped_sock.getpeercert(True)
                 cert = x509.load_der_x509_certificate(der_cert)
 
-                subject = cert.subject.rfc4514_string()
-                common_name = ""
-                for item in cert.subject.rdns:
-                    str_item = item.rfc4514_string()
-                    if str_item.startswith("CN="):
-                        common_name = str_item.replace("CN=", "")
-                        break;
-                issuer = cert.issuer.rfc4514_string()
-                not_valid_after = cert.not_valid_after
-                not_valid_before = cert.not_valid_before
-                serial_number = cert.serial_number
-                signature_hash_algorithm = cert.signature_hash_algorithm.name
-                version = cert.version.name
-                subject_alternative_names = []
-                san = cert.extensions.get_extension_for_oid(ExtensionOID.SUBJECT_ALTERNATIVE_NAME)
-                for san in san.value:
-                    subject_alternative_names.append(san.value)
+                scanned_cert = ScannedCertificate(cert)
 
     def start_scan(self):
+        # Set scan targets
         if not self.scan_target:
             raise ValueError("No scan targets specified")
         targets = self.scan_target
+
+        # Set scan ports
         if self.port_scan_method == PortScanMethod.nmap:
             raise NotImplementedError("Will use nmap function to find ports to scan")
         elif self.port_scan_method == PortScanMethod.specific_ports:
