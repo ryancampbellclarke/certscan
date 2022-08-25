@@ -17,12 +17,14 @@ with socket.create_connection((target, port)) as sock:
     with context.wrap_socket(sock, server_hostname=target) as wrapped_sock:
         der_cert = wrapped_sock.getpeercert(True)
         cert = x509.load_der_x509_certificate(der_cert)
-        # show cert expiry date
-        #print(cert)
-
-        # Get SANs
 
         subject = cert.subject.rfc4514_string()
+        common_name = ""
+        for item in cert.subject.rdns:
+            str_item = item.rfc4514_string()
+            if str_item.startswith("CN="):
+                common_name = str_item.replace("CN=", "")
+                break;
         issuer=cert.issuer.rfc4514_string()
         not_valid_after=cert.not_valid_after
         not_valid_before=cert.not_valid_before

@@ -5,6 +5,8 @@ from cryptography import x509
 import socket
 import ssl
 
+from cryptography.hazmat._oid import ExtensionOID
+
 
 class PortScanMethod(int, Enum):
     nmap = 0,
@@ -35,11 +37,26 @@ class Scanner:
 
         with socket.create_connection((target, port)) as sock:
             with context.wrap_socket(sock, server_hostname=target) as wrapped_sock:
-                print("SSL/TLS version:", wrapped_sock.version())
-                der = wrapped_sock.getpeercert(True)
-                pem = ssl.DER_cert_to_PEM_cert(der)
-                cert = x509.load_pem_x509_certificate(str.encode(pem))
-                print(cert)
+                der_cert = wrapped_sock.getpeercert(True)
+                cert = x509.load_der_x509_certificate(der_cert)
+
+                subject = cert.subject.rfc4514_string()
+                common_name = ""
+                for item in cert.subject.rdns:
+                    str_item = item.rfc4514_string()
+                    if str_item.startswith("CN="):
+                        common_name = str_item.replace("CN=", "")
+                        break;
+                issuer = cert.issuer.rfc4514_string()
+                not_valid_after = cert.not_valid_after
+                not_valid_before = cert.not_valid_before
+                serial_number = cert.serial_number
+                signature_hash_algorithm = cert.signature_hash_algorithm.name
+                version = cert.version.name
+                subject_alternative_names = []
+                san = cert.extensions.get_extension_for_oid(ExtensionOID.SUBJECT_ALTERNATIVE_NAME)
+                for san in san.value:
+                    subject_alternative_names.append(san.value)
 
     def start_scan(self):
         if not self.scan_target:
