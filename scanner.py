@@ -1,6 +1,9 @@
 import ipaddress
 from enum import Enum
 from typing import List
+from cryptography import x509
+import socket
+import ssl
 
 
 class PortScanMethod(int, Enum):
@@ -24,9 +27,30 @@ class Scanner:
     port_scan_method: PortScanMethod
     port_scan_target: List[int] = []
 
+    def __scan(self, target, port):
+        context = ssl.create_default_context()
+        # set context so it can receive valid certificate
+        context.check_hostname = False
+        context.verify_mode = ssl.CERT_NONE
+
+        with socket.create_connection((target, port)) as sock:
+            with context.wrap_socket(sock, server_hostname=target) as wrapped_sock:
+                print("SSL/TLS version:", wrapped_sock.version())
+                der = wrapped_sock.getpeercert(True)
+                pem = ssl.DER_cert_to_PEM_cert(der)
+                cert = x509.load_pem_x509_certificate(str.encode(pem))
+                print(cert)
+
     def start_scan(self):
-        # TODO implement scanner
-        pass
+        if not self.scan_target:
+            raise ValueError("No scan targets specified")
+        targets = self.scan_target
+        if self.port_scan_method == PortScanMethod.nmap:
+            raise NotImplementedError("Will use nmap function to find ports to scan")
+        elif self.port_scan_method == PortScanMethod.specific_ports:
+            ports = self.scan_target
+        else:
+            ports = [int(DEFAULT_PORT_TARGET)]
 
     def __convert_scan_target_str_to_list(self, scan_target: str, scan_method: ScanMethod):
         targets: List[ipaddress.ip_address] = []
@@ -41,7 +65,7 @@ class Scanner:
                 ip_range = [ipaddress.IPv4Address(ip) for ip in scan_target.split('-')]
                 start_ip = ip_range[0]
                 end_ip = ip_range[1]
-                for ip_int in range(int(start_ip), int(end_ip)+1):
+                for ip_int in range(int(start_ip), int(end_ip) + 1):
                     targets.append(str(ipaddress.IPv4Address(ip_int)))
                 return targets
             except ValueError as e:
@@ -57,7 +81,7 @@ class Scanner:
             except ValueError as e:
                 print(e)
         else:
-            return None
+            return [int(DEFAULT_PORT_TARGET)]
 
     def __init__(self, scan_method: ScanMethod, scan_target: str, port_scan_method: PortScanMethod,
                  port_scan_target: str):
