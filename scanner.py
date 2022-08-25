@@ -22,23 +22,28 @@ class Scanner():
     port_scan_method: PortScanMethod
     port_scan_target: List[int] = []
 
-    def __convert_scan_target_string_to_list(self, scan_target: str, scan_method: ScanMethod):
-        # TODO implement string to list for each use case
+    def __convert_scan_target_str_to_list(self, scan_target: str, scan_method: ScanMethod):
         targets: List[ipaddress.ip_address] = []
         if scan_method == ScanMethod.single:
-            targets.append(ipaddress.ip_address(scan_target))
+            # Append single IP to list
+            return targets.append(str(ipaddress.ip_address(scan_target)))
         elif scan_method == ScanMethod.cidr:
-            # TODO implement CIDR conversion
-            pass
+            return [str(ip) for ip in ipaddress.IPv4Network(scan_target)]
         elif scan_method == ScanMethod.range:
-            # TODO implement range conversion
-            pass
+            try:
+                ip_range = [ipaddress.IPv4Address(ip) for ip in scan_target.split('-')]
+                start_ip = ip_range[0]
+                end_ip = ip_range[1]
+                for ip_int in range(int(start_ip), int(end_ip)):
+                    targets.append(str(ipaddress.IPv4Address(ip_int)))
+                return targets
+            except:
+                ValueError("The string expected should be IPv4 addresses of the form x.x.x.x-x.x.x.x")
         elif scan_method == ScanMethod.domains:
-            # TODO implement domains conversion
-            pass
+            return [domain for domain in scan_target.split(',')]
         return targets
 
-    def __convert_port_scan_target_string_to_list(self, port_scan_target):
+    def __convert_port_scan_target_str_to_list(self, port_scan_target):
         try:
             target = [int(port) for port in port_scan_target.split(',')]
         except:
@@ -49,6 +54,6 @@ class Scanner():
                  port_scan_target: str):
         self.scan_method = scan_method
         self.port_scan_method = port_scan_method
-        self.scan_target = self.__convert_scan_target_string_to_list(scan_target, scan_method)
+        self.scan_target = self.__convert_scan_target_str_to_list(scan_target, scan_method)
         if port_scan_target is not None:
-            self.port_scan_target = self.__convert_port_scan_target_string_to_list(port_scan_target)
+            self.port_scan_target = self.__convert_port_scan_target_str_to_list(port_scan_target)
