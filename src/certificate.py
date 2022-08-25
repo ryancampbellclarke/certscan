@@ -24,6 +24,7 @@ class ScannedCertificate:
             if str_item.startswith("CN="):
                 return str_item.replace("CN=", "")
 
+
     def to_string(self):
         san_string = ', '.join(map(str, self.subject_alternative_names))
         return f"Common name:                   {self.common_name} \n" \

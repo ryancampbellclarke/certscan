@@ -4,11 +4,10 @@ import os
 import sys
 from os.path import dirname
 
+from src.helpers import write_list_of_certs_to_file, DEFAULT_FILE_OUT
 from src.scanner import Scanner
 from src import options
 
-DEFAULT_OUTPUT_FOLDER = "output/"
-DEFAULT_FILE_OUT = f"{DEFAULT_OUTPUT_FOLDER}certificates.csv"
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -49,24 +48,25 @@ if __name__ == '__main__':
         discovered_certs = scanner.start_scan()
 
         if args.output:
-            # write to csv
-            try:
-                os.mkdir(dirname(args.output))
-            except:
-                # Dir already exists
-                pass
-            with open(args.output, "w", newline="") as csvfile:
-                writer = csv.writer(csvfile)
-                writer.writerow(
-                    ['subject', 'common_name', 'issuer', 'issuer_common_name',
-                     'not_valid_after', 'not_valid_before', 'serial_number',
-                     'signature_hash_algorithm', 'version',
-                     'subject_alternative_names', 'port'])
-                for cert in discovered_certs:
-                    writer.writerow(
-                        [cert.subject, cert.common_name, cert.issuer,
-                         cert.issuer_common_name,
-                         cert.not_valid_after, cert.not_valid_before,
-                         cert.serial_number,
-                         cert.signature_hash_algorithm, cert.version,
-                         cert.subject_alternative_names, cert.port])
+            write_list_of_certs_to_file(discovered_certs, args.output)
+            # # write to csv
+            # try:
+            #     os.mkdir(dirname(args.output))
+            # except:
+            #     # Dir already exists
+            #     pass
+            # with open(args.output, "w", newline="") as csvfile:
+            #     writer = csv.writer(csvfile)
+            #     writer.writerow(
+            #         ['subject', 'common_name', 'issuer', 'issuer_common_name',
+            #          'not_valid_after', 'not_valid_before', 'serial_number',
+            #          'signature_hash_algorithm', 'version',
+            #          'subject_alternative_names', 'port'])
+            #     for cert in discovered_certs:
+            #         writer.writerow(
+            #             [cert.subject, cert.common_name, cert.issuer,
+            #              cert.issuer_common_name,
+            #              cert.not_valid_after, cert.not_valid_before,
+            #              cert.serial_number,
+            #              cert.signature_hash_algorithm, cert.version,
+            #              cert.subject_alternative_names, cert.port])
