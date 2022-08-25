@@ -41,7 +41,13 @@ Examples:
 
 ### Scheduled mode
 
-Modify the `config.ini` configuration and run `certscan` without any arguments.
+#### Config
+
+set `-i` or `--ini`: Modifies the `config.ini` configuration and run `certscan -i` without any arguments.
+
+#### Database
+
+set `-db` or `--database`: Connects to `database.ini` to discover scanner information.
 
 ## Build
 

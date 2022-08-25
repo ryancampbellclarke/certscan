@@ -1,6 +1,7 @@
 import argparse
 import csv
 import os
+import sys
 from os.path import dirname
 
 from src.scanner import Scanner
@@ -21,16 +22,21 @@ if __name__ == '__main__':
                              f"{DEFAULT_FILE_OUT}"
                              f" or specified path")
     args = parser.parse_args()
+    if len(sys.argv) == 1:
+        parser.print_help(sys.stderr)
+        sys.exit(1)
 
-    if options.no_scan_type([args.cidr, args.single, args.domains, args.range]):
-        # TODO read config.ini for scanner configuration
-        raise NotImplementedError(
-            "Will read config.ini for scanner configuration")
-    elif args.database:
+    print("args.database: " + str(args.database))
+
+    if args.database:
         # TODO read database (defined in config.ini) for scanner configuration
         raise NotImplementedError(
             "Will read database (defined in config.ini) for scanner "
             "configuration")
+    elif args.ini:
+        # TODO read config.ini for scanner configuration
+        raise NotImplementedError(
+            "Will read config.ini for scanner configuration")
     else:
         # Command line usage, output to stdout or csv
         (scan_method, scan_target) = options.parse_scan_input(args)

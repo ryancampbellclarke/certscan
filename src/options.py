@@ -37,7 +37,9 @@ def scan_type_group(parser):
                             "`,`")
     group.add_argument("-db", "--database", action='store_true',
                        help="Read scanner configuration from database defined "
-                            "in config.ini")
+                            "in database.ini")
+    group.add_argument("-i", "--ini", action='store_true',
+                       help="Read scanner configuration from config.ini")
     return parser
 
 
