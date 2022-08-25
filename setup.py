@@ -8,6 +8,6 @@ setup(console = [
         "dest_base" : "certscan"
     }],
     data_files=[
-        ("",["config.ini"]),
+        ("conf",["conf/config.ini","conf/database.ini"]),
         ]
 )
