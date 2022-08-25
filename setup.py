@@ -7,5 +7,7 @@ setup(console = [
         #"icon_resources": [(0, "favicon.ico")], ### Icon to embed into the PE file.
         "dest_base" : "certscan"
     }],
-    data_files=[("dist",["config.ini",])]
+    data_files=[
+        ("",["config.ini"]),
+        ]
 )
