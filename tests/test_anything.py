@@ -1,3 +1,3 @@
 # TODO implement tests
-test_stub():
+def test_stub():
     assert False
