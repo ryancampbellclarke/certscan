@@ -1,6 +1,6 @@
 # CertScan
 
-Certificate Scanner. Find certificates on 
+Certificate Scanner. Find certificates on your network.
 
 ## Run modes
 
