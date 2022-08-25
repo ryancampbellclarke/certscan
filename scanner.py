@@ -32,7 +32,8 @@ class Scanner:
         targets: List[ipaddress.ip_address] = []
         if scan_method == ScanMethod.single:
             # Append single IP to list
-            return targets.append(str(ipaddress.ip_address(scan_target)))
+            targets.append(str(ipaddress.ip_address(scan_target)))
+            return targets
         elif scan_method == ScanMethod.cidr:
             return [str(ip) for ip in ipaddress.IPv4Network(scan_target)]
         elif scan_method == ScanMethod.range:
