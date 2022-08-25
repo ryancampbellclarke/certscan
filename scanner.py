@@ -26,13 +26,18 @@ class Scanner():
         targets: List[ipaddress.ip_address] = []
         if scan_method == ScanMethod.single:
             # Append single IP to list
-            targets.append(ipaddress.ip_address(scan_target))
+            targets.append(str(ipaddress.ip_address(scan_target)))
         elif scan_method == ScanMethod.cidr:
-            # TODO implement CIDR conversion
             targets = [str(ip) for ip in ipaddress.IPv4Network(scan_target)]
         elif scan_method == ScanMethod.range:
-            # TODO implement range conversion
-            pass
+            try:
+                ip_range = [ipaddress.IPv4Address(ip) for ip in scan_target.split('-')]
+                start_ip = ip_range[0]
+                end_ip = ip_range[1]
+                for ip_int in range(int(start_ip), int(end_ip)):
+                    targets.append(str(ipaddress.IPv4Address(ip_int)))
+            except:
+                ValueError("The string expected should be IPv4 addresses of the form x.x.x.x-x.x.x.x")
         elif scan_method == ScanMethod.domains:
             # TODO implement domains conversion
             pass
