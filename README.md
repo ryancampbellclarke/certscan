@@ -16,11 +16,9 @@ Run a single scan by passing one of the following scan types:
 
 `-d` or `--domains` expects a list of domains separated by `,`
 
-and optionally (if not specified, it defaults to `--ports 443`) 
+and optionally (if not specified, it defaults to `--ports 443`) one of these port scan types:
 
 `-p` or `--ports` to specify ports to scan in the form separated by `,`
-
-or
 
 `-n` or `--nmap` to scan for open ports with nmap, then scan for certificates on those open ports
 
