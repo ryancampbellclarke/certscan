@@ -1,14 +1,26 @@
-import ssl, socket
+from cryptography import x509
+import socket
+import ssl
+from cryptography.x509.oid import ExtensionOID
+import sys
 
-hostname = 'yukon.ca'
-ctx = ssl.create_default_context()
-with ctx.wrap_socket(socket.socket(), server_hostname=hostname) as s:
-    s.connect((hostname, 443))
-    cert = s.getpeercert()
+from certificate import ScannedCertificate
 
-print(dict(cert))
+#target = "yukon.ca"
+target = "example.com"
+port = 443
+# create default context
+context = ssl.create_default_context()
+# set context so it can receive valid certificate
+context.check_hostname = False
+context.verify_mode = ssl.CERT_NONE
 
-subject = dict(x[0] for x in cert['subject'])
-issued_to = subject['commonName']
-issuer = dict(x[0] for x in cert['issuer'])
-issued_by = issuer['commonName']
+with socket.create_connection((target, port)) as sock:
+    with context.wrap_socket(sock, server_hostname=target) as wrapped_sock:
+        der_cert = wrapped_sock.getpeercert(True)
+        cert = x509.load_der_x509_certificate(der_cert)
+
+        scanned_cert = ScannedCertificate(cert)
+
+
+        print(scanned_cert.__dict__)
