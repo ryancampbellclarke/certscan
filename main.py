@@ -21,7 +21,7 @@ if __name__ == '__main__':
 
         scanner = Scanner(scan_method, scan_target, port_scan_method, port_scan_target)
 
-        # print(scanner.scan_target)
-        # print(scanner.scan_method)
-        # print(scanner.port_scan_target)
-        # print(scanner.port_scan_method)
+        print(scanner.scan_target)
+        print(scanner.scan_method)
+        print(scanner.port_scan_target)
+        print(scanner.port_scan_method)

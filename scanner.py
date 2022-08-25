@@ -23,13 +23,13 @@ class Scanner():
     port_scan_target: List[int] = []
 
     def __convert_scan_target_string_to_list(self, scan_target: str, scan_method: ScanMethod):
-        # TODO implement string to list for each use case
         targets: List[ipaddress.ip_address] = []
         if scan_method == ScanMethod.single:
+            # Append single IP to list
             targets.append(ipaddress.ip_address(scan_target))
         elif scan_method == ScanMethod.cidr:
             # TODO implement CIDR conversion
-            pass
+            targets = [str(ip) for ip in ipaddress.IPv4Network(scan_target)]
         elif scan_method == ScanMethod.range:
             # TODO implement range conversion
             pass
