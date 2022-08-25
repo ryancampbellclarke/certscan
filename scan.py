@@ -18,13 +18,13 @@ class ScanMethod(int, Enum):
 
 class Scan():
     scan_method: ScanMethod
-    scan_target: List[Any]
+    scan_target: List[ipaddress.ip_address]
     port_scan_method: PortScanMethod
-    port_scan_target: List[int]
+    port_scan_target: List[int] = []
 
     def __convert_scan_target_string_to_list(self, scan_target: str, scan_method: ScanMethod):
         # TODO implement string to list for each use case
-        targets: List[ipaddress] = []
+        targets: List[ipaddress.ip_address] = []
         if scan_method == ScanMethod.single:
             targets.append(ipaddress.ip_address(scan_target))
         elif scan_method == ScanMethod.cidr:
@@ -43,10 +43,12 @@ class Scan():
             target = [int(port) for port in port_scan_target.split(',')]
         except:
             raise ValueError("Non-integer in list of ports")
+        return target
 
     def __init__(self, scan_method: ScanMethod, scan_target: str, port_scan_method: PortScanMethod,
                  port_scan_target: str):
         self.scan_method = scan_method
         self.port_scan_method = port_scan_method
         self.scan_target = self.__convert_scan_target_string_to_list(scan_target, scan_method)
-        self.port_scan_target = self.__convert_port_scan_target_string_to_list(port_scan_target)
+        if port_scan_target is not None:
+            self.port_scan_target = self.__convert_port_scan_target_string_to_list(port_scan_target)
