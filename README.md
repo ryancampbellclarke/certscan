@@ -2,36 +2,15 @@
 
 Certificate Scanner. Find certificates on your network.
 
+## Contents
+
+* [Usage](#usage)
+  * [Single Scan](#single-scan)
+  * [Scheduled](#scheduled)
 * [Installation](#Installation)
   * [Python interpreter](#python-interpreter)
   * [Windows](#windows)
-* [Usage](#usage)
-  * [Single Scan](#single-Scan)
-  * [Scheduled](#scheduled)
-    * [Config](#config)
-    * [Database](#database)
 * [Build](#build)
-
-## Installation
-
-### Python interpreter
-
-1. Download source
-2. In source directory run as `python main.py`
-
-### Windows
-
-#### Binary
-1. Download binary from Releases page on Github.
-2. Extract archive to installation folder
-3. [OPTIONAL] [Add the extracted folder to PATH](https://www.architectryan.com/2018/03/17/add-to-the-path-on-windows-10/)
-4. If you added to path, run with `certscan`. Otherwise, run `certscan.exe` from the installation folder or with the absolute path.
-
-#### Build from source
-1. Follow build instructions in [Build section](#build)
-2. Copy the generated `dist/` folder to where you'd like to install it
-3. [OPTIONAL] [Add the extracted folder to PATH](https://www.architectryan.com/2018/03/17/add-to-the-path-on-windows-10/)
-4. If you added to path, run with `certscan`. Otherwise, run `certscan.exe` from the installation folder or with the absolute path.
 
 ## Usage
 
@@ -80,14 +59,48 @@ Scan the list of domains on port
 
 #### Config
 
-set `-c` or `--config`: Modifies the `config.ini` configuration and
-run `certscan -i` without any arguments.
+**NOTE:** On roadmap, not yet implemented. Issue #22
+
+set `-c` or `--config`: Creates scanners defined in `conf/config.ini`
 
 #### Database
 
-set `-db` or `--database`: Connects to `database.ini` to discover scanner
+**NOTE:** On roadmap, not yet implemented. Issue #23
+
+set `-db` or `--database`: Connects to `conf/database.ini` to discover scanner
 information.
+
+## Installation
+
+### Python interpreter
+
+1. Download source
+2. In source directory run as `python main.py`
+
+### Windows
+
+#### Binary
+1. Download binary from Releases page on Github.
+2. Extract archive to installation folder
+3. [OPTIONAL] [Add the extracted folder to PATH](https://www.architectryan.com/2018/03/17/add-to-the-path-on-windows-10/)
+4. If you added to path, run with `certscan`. Otherwise, run `certscan.exe` from the installation folder or with the absolute path.
+
+#### Build from source
+1. Follow build instructions in [Build section](#build)
+2. Copy the generated `dist/` folder to where you'd like to install it
+3. [OPTIONAL] [Add the extracted folder to PATH](https://www.architectryan.com/2018/03/17/add-to-the-path-on-windows-10/)
+4. If you added to path, run with `certscan`. Otherwise, run `certscan.exe` from the installation folder or with the absolute path.
 
 ## Build
 
+### Windows
+
 `python setup.py py2exe`
+
+### MacOS
+
+**NOTE:** On roadmap, not yet implemented. Issue #8
+
+### Linux
+
+**NOTE:** On roadmap, not yet implemented. Issue #7
