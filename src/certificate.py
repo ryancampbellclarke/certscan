@@ -21,6 +21,9 @@ class ScannedCertificate:
     port: int = 443
 
     def __common_name_from_cert(self, cert):
+        """
+        Pulls common name from rfc4514 formatted string found in cert.subject.rdns
+        """
         for item in cert.subject.rdns:
             str_item = item.rfc4514_string()
             if str_item.startswith("CN="):
@@ -28,6 +31,9 @@ class ScannedCertificate:
 
 
     def to_string(self):
+        """
+        Converts object to string with fields of common interest
+        """
         san_string = ', '.join(map(str, self.subject_alternative_names))
         return f"Common name:                   {self.common_name} \n" \
                f"Issuer common name:            {self.issuer_common_name} \n" \
@@ -37,6 +43,9 @@ class ScannedCertificate:
                f"Not Valid After:               {self.not_valid_after} \n"
 
     def __read_sans_from_cert(self, cert):
+        """
+        Parses extensions for SAN extension OID and converts to list
+        """
         try:
             SANs = cert.extensions.get_extension_for_oid(
                 ExtensionOID.SUBJECT_ALTERNATIVE_NAME)
@@ -50,13 +59,19 @@ class ScannedCertificate:
 
 
     def __issuer_common_name_from_cert(self, cert):
+        """
+        Pulls issuer common name from rfc4514 formatted string found in cert.issuer.rdns
+        """
         for item in cert.issuer.rdns:
             str_item = item.rfc4514_string()
             if str_item.startswith("CN="):
                 return str_item.replace("CN=", "")
 
     def to_json(self):
-            return json.dumps(self.__dict__, indent=4, sort_keys=True, default=str)
+        """
+        Dumps object's json representation
+        """
+        return json.dumps(self.__dict__, indent=4, sort_keys=True, default=str)
 
     def __init__(self, cert: Certificate, target: str, port: int = 443):
         self.target = target
