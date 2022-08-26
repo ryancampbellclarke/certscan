@@ -36,8 +36,13 @@ class Scanner:
 
     @staticmethod
     def __scan(target, port):
+        """
+        Starts scan of target (hostname or ip)/port for a certificate. Any
+        found certificates are returned as a ScannedCertificate
+        """
         context = ssl.create_default_context()
-        # set context so it can receive valid certificate
+
+        # change context so it can receive valid certificate
         context.check_hostname = False
         context.verify_mode = ssl.CERT_NONE
         try:
@@ -51,7 +56,7 @@ class Scanner:
                                               port=port)
         except TimeoutError as e:
             # This is fine. When scanning, ignore failures unless specified
-            # TODO Flag to enable failures
+            # TODO Flag to enable failure logging
             pass
         return None
 
@@ -61,6 +66,10 @@ class Scanner:
             "Will use nmap function to find ports to scan")
 
     def start_scan(self):
+        """
+        Starts scan defined in this object. Scans a list of ports on target
+        ips/domains and returns any certificates found
+        """
         # Set scan targets
         if not self.scan_target:
             raise ValueError("No scan targets specified")
@@ -89,6 +98,10 @@ class Scanner:
 
     def __convert_scan_target_str_to_list(self, scan_target: str,
                                           scan_method: ScanMethod):
+        """
+        For each scan method parse the scan_target string return a list of
+        domains or ips
+        """
         targets: List[ipaddress.ip_address] = []
         if scan_method == ScanMethod.single:
             # Append single IP to list
@@ -112,6 +125,9 @@ class Scanner:
         return targets
 
     def __convert_port_scan_target_str_to_list(self, port_scan_target):
+        """
+        Convert string of comma delimited ports into a list of ints
+        """
         if port_scan_target:
             try:
                 return [int(port) for port in port_scan_target.split(',')]
