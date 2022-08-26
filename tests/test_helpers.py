@@ -38,7 +38,5 @@ def test_write_list_of_certs_to_file():
         file_contents = open(TEST_FILE_NAME).read()
         assert exists(TEST_FILE_NAME)
     finally:
-        # os.remove(TEST_FILE_NAME)
-        pass
-    assert exists(TEST_FILE_NAME)
+        os.remove(TEST_FILE_NAME)
     assert file_contents == 'subject,target,common_name,issuer,issuer_common_name,not_valid_after,not_valid_before,serial_number,signature_hash_algorithm,version,subject_alternative_names,port\n"CN=www.example.org,O=Internet Corporation for Assigned Names and Numbers,L=Los Angeles,ST=California,C=US",example.com,www.example.org,"CN=DigiCert TLS RSA SHA256 2020 CA1,O=DigiCert Inc,C=US",DigiCert TLS RSA SHA256 2020 CA1,2023-03-14 23:59:59,2022-03-14 00:00:00,20823119674429668393338028820299337114,sha256,v3,"[\'www.example.org\', \'example.net\', \'example.edu\', \'example.com\', \'example.org\', \'www.example.com\', \'www.example.edu\', \'www.example.net\']",443\n'
