@@ -9,7 +9,9 @@ from cryptography.x509 import Certificate, ExtensionNotFound
 class ScannedCertificateStub:
     target: str
     port: int
-    status: str = "Not found"
+    status: str
+
+    NOT_FOUND: str = "Not found"
 
     def to_string(self):
         """
@@ -28,6 +30,7 @@ class ScannedCertificateStub:
     def __init__(self, target, port):
         self.target = target
         self.port = port
+        self.status = self.NOT_FOUND
 
 
 class ScannedCertificate:

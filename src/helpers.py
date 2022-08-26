@@ -1,13 +1,65 @@
 # write to csv
+import argparse
 import csv
 import os
 from os.path import dirname
 from typing import List
 
+from src import options
 from src.certificate import ScannedCertificate
+from src.scanner import Scanner
 
 DEFAULT_OUTPUT_FOLDER = "output/"
 DEFAULT_FILE_OUT = f"{DEFAULT_OUTPUT_FOLDER}certificates.csv"
+
+
+def get_args(parser):
+    parser = argparse.ArgumentParser()
+    parser = options.scan_type_group(parser)
+    parser = options.port_scan_group(parser)
+    parser = options.print_group(parser)
+    parser.add_argument("-o", "--output", nargs='?', const=DEFAULT_FILE_OUT,
+                        help=f"Output discovered certificates to "
+                             f"{DEFAULT_FILE_OUT}"
+                             f" or specified path")
+    parser.add_argument("-a", "--all", action='store_true',
+                        help="Print all certificate scans to stdout, found and "
+                             "not-found certificates. Prints in json if -j "
+                             "option set")
+
+    return parser.parse_args()
+
+def certscan_config(args):
+    # TODO read config.ini for scanner configuration
+    raise NotImplementedError(
+        "Will read config.ini for scanner configuration")
+
+
+def certscan_database(args):
+    # TODO read database (defined in database.ini) for scanner configuration
+    raise NotImplementedError(
+        "Will read database (defined in database.ini) for scanner "
+        "configuration")
+
+
+def certscan_direct(args):
+    """
+
+    :param args:
+    :return:
+    """
+    (scan_method, scan_target, port_scan_method,
+     port_scan_target) = options.parse_inputs(args)
+    # (scan_method, scan_target) = options.parse_scan_input(args)
+    # (port_scan_method, port_scan_target) = options.parse_port_scan_input(args)
+    scanner = Scanner(scan_method, scan_target, port_scan_method,
+                      port_scan_target, quiet=args.quiet,
+                      print_as_json=args.json, show_all_certs=args.all)
+    discovered_certs = scanner.start_scan()
+
+    # output to csv if flag set
+    if args.output:
+        write_list_of_certs_to_file(discovered_certs, args.output)
 
 
 def write_list_of_certs_to_file(discovered_certs: List[ScannedCertificate],
