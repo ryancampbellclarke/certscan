@@ -24,5 +24,5 @@ if __name__ == '__main__':
         # Use scanners configured in config.ini file
         certscan_config(args)
     else:
-        # Use scanner requested from arguments, output to stdout or csv
+        # Use scanner requested from arguments, output to stdout and/or csv
         certscan_direct(args)

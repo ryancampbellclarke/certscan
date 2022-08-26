@@ -14,6 +14,9 @@ DEFAULT_FILE_OUT = f"{DEFAULT_OUTPUT_FOLDER}certificates.csv"
 
 
 def get_args(parser):
+    """
+    Use scanners configured in database configured in database.ini file
+    """
     parser = argparse.ArgumentParser()
     parser = options.scan_type_group(parser)
     parser = options.port_scan_group(parser)
@@ -31,6 +34,9 @@ def get_args(parser):
 
 
 def certscan_config(args):
+    """
+    Use scanners configured in config.ini file
+    """
     # TODO read config.ini for scanner configuration
     raise NotImplementedError(
         "Will read config.ini for scanner configuration")
@@ -45,9 +51,7 @@ def certscan_database(args):
 
 def certscan_direct(args):
     """
-
-    :param args:
-    :return:
+    Use scanner requested from arguments, output to stdout and/or csv
     """
     (scan_method, scan_target, port_scan_method,
      port_scan_target) = options.parse_inputs(args)
