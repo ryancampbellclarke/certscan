@@ -5,23 +5,9 @@ Helper functions to implement command line options and to organize them for furt
 """
 
 
-def no_scan_type(args):
-    """
-    Checks if all scan_type args are None
-    :param args: Parsed args from an ArgumentParser
-    :return: False if no scan type was passed
-    """
-    if all(arg is None for arg in args):
-        return True
-    else:
-        return False
-
-
 def scan_type_group(parser):
     """
     Sets up Scan Type arguments related to configuring a certscan run
-    :param parser: ArgumentParser instance that these options will be added to.
-    :return: ArgumentParser instance with new Scan Type options
     """
     group = parser.add_mutually_exclusive_group()
     group.add_argument("-s", "--single", type=str,
@@ -46,8 +32,6 @@ def scan_type_group(parser):
 def port_scan_group(parser):
     """
     Sets up Port Scan Type arguments related to configuring a certscan run
-    :param parser: ArgumentParser instance that these options will be added to.
-    :return: ArgumentParser instance with new Port Scan options
     """
     group = parser.add_mutually_exclusive_group()
     group.add_argument("-p", "--ports", type=str,
@@ -59,6 +43,9 @@ def port_scan_group(parser):
 
 
 def print_group(parser):
+    """
+    Sets up arguments related to managing printing to stdout
+    """
     group = parser.add_mutually_exclusive_group()
     group.add_argument("-q", "--quiet", action='store_true',
                        help="Turn off printing discovered certificates to"

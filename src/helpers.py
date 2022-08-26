@@ -12,6 +12,10 @@ DEFAULT_FILE_OUT = f"{DEFAULT_OUTPUT_FOLDER}certificates.csv"
 
 def write_list_of_certs_to_file(discovered_certs: List[ScannedCertificate],
                                 filename):
+    """
+    Takes list of discovered certificates and a filename and write these
+    certificates to that file
+    """
     try:
         os.mkdir(dirname(filename))
     except:
