@@ -19,16 +19,19 @@ if __name__ == '__main__':
                              f" or specified path")
 
     args = parser.parse_args()
+
+    # Check if no args, print help
     if len(sys.argv) == 1:
         parser.print_help(sys.stderr)
         sys.exit(1)
 
     if args.database:
-        # TODO read database (defined in config.ini) for scanner configuration
+        # TODO read database (defined in database.ini) for scanner configuration
         raise NotImplementedError(
             "Will read database (defined in config.ini) for scanner "
             "configuration")
     elif args.ini:
+        # Command line usage from .ini file
         # TODO read config.ini for scanner configuration
         raise NotImplementedError(
             "Will read config.ini for scanner configuration")

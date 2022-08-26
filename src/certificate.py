@@ -14,7 +14,7 @@ class ScannedCertificate:
     issuer_common_name: str
     not_valid_after: datetime
     not_valid_before: datetime
-    serial_number: int
+    serial_number: str
     signature_hash_algorithm: str
     version: str
     subject_alternative_names: List[str] = []
@@ -66,7 +66,7 @@ class ScannedCertificate:
         self.issuer_common_name = self.__issuer_common_name_from_cert(cert)
         self.not_valid_after = cert.not_valid_after
         self.not_valid_before = cert.not_valid_before
-        self.serial_number = cert.serial_number
+        self.serial_number = str(cert.serial_number)
         self.signature_hash_algorithm = cert.signature_hash_algorithm.name
         self.version = cert.version.name
         self.subject_alternative_names = self.__read_sans_from_cert(cert)
