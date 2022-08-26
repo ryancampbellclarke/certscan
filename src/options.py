@@ -1,3 +1,5 @@
+import ipaddress
+
 from src import scanner
 
 """
@@ -10,21 +12,27 @@ def scan_type_group(parser):
     Sets up Scan Type arguments related to configuring a certscan run
     """
     group = parser.add_mutually_exclusive_group()
-    group.add_argument("-s", "--single", type=str,
-                       help="Scan the given domain name or IPv4 address")
-    group.add_argument("-c", "--cidr", type=str,
-                       help="Scan the given CIDR notated (e.g. 10.10.10.0/24) "
-                            "subnet")
-    group.add_argument("-r", "--range", type=str,
-                       help="Scan inclusively the range of two IP addresses "
-                            "delimited by '-'")
-    group.add_argument("-d", "--domains", type=str,
-                       help="Scan inclusively a list of domains separated by "
+    # group.add_argument("-s", "--single", type=str,
+    #                    help="Scan the given domain name or IPv4 address")
+    # group.add_argument("-c", "--cidr", type=str,
+    #                    help="Scan the given CIDR notated (e.g. 10.10.10.0/24) "
+    #                         "subnet")
+    # group.add_argument("-r", "--range", type=str,
+    #                    help="Scan inclusively the range of two IP addresses "
+    #                         "delimited by '-'")
+    # group.add_argument("-d", "--domains", type=str,
+    #                    help="Scan inclusively a list of domains separated by "
+    #                         "`,`")
+    group.add_argument("-s", "--scan", type=str,
+                       help="Scan a single IP: 10.10.10.10, a range of IPs: "
+                            "10.10.10.10-10.10.10.20, a range of IPs by CIDR "
+                            "notation: 10.10.10.0/24, or a list of domains: "
+                            "example.com,example.org,example.edu"
                             "`,`")
     group.add_argument("-db", "--database", action='store_true',
                        help="Read scanner configuration from database defined "
                             "in database.ini")
-    group.add_argument("-i", "--ini", action='store_true',
+    group.add_argument("-c", "--config", action='store_true',
                        help="Read scanner configuration from config.ini")
     return parser
 
@@ -57,14 +65,23 @@ def parse_scan_input(args):
     Parses the arguments passed to determine which one was selected and returns
     the data associated.
     """
-    if args.single:
-        return (scanner.ScanMethod.single, args.single)
-    elif args.cidr:
-        return (scanner.ScanMethod.cidr, args.cidr)
-    elif args.range:
-        return (scanner.ScanMethod.range, args.range)
-    elif args.domains:
-        return (scanner.ScanMethod.domains, args.domains)
+    #isIpAddress = False
+    # Determine if it is an IP address
+    try:
+        ipaddress.ip_address(args.scan)
+        isIpAddress = True
+    except ValueError:
+        isIpAddress = False
+
+    if isIpAddress:
+        return (scanner.ScanMethod.single, args.scan)
+    elif "/" in args.scan:
+        # Only CIDR should have "/"
+        return (scanner.ScanMethod.cidr, args.scan)
+    elif "-" in args.scan:
+        return (scanner.ScanMethod.range, args.scan)
+    else:
+        return (scanner.ScanMethod.domains, args.scan)
 
 
 def parse_port_scan_input(args):

@@ -1,11 +1,8 @@
 import argparse
-import csv
-import os
 import sys
-from os.path import dirname
 
 from src.helpers import certscan_direct, certscan_config, certscan_database, \
-    get_args
+    get_args, print_args_help
 
 if __name__ == '__main__':
     # Setup argument parser
@@ -14,8 +11,7 @@ if __name__ == '__main__':
 
     # Check if no args, print help
     if len(sys.argv) == 1:
-        parser.print_help(sys.stderr)
-        sys.exit(1)
+        print_args_help(parser)
 
     if args.database:
         # Use scanners configured in database configured in database.ini file
@@ -23,6 +19,9 @@ if __name__ == '__main__':
     elif args.ini:
         # Use scanners configured in config.ini file
         certscan_config(args)
-    else:
+    elif args.scan:
         # Use scanner requested from arguments, output to stdout and/or csv
         certscan_direct(args)
+    else:
+        # If reached here, something went wrong, print help
+        print_args_help(parser)

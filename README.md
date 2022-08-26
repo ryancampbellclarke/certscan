@@ -20,18 +20,21 @@ Certificate Scanner. Find certificates on your network.
 
 ## Run modes
 
-### Single Scan mode
+### Single Scan
 
-Run a single scan by passing one of the following scan types:
+Run a scan by `-s` or `--scan` with one of the following strings:
 
-`-s` or `--single` expects a single IPv4 address or domain name
+Single IP: `-s 10.10.10.10`
 
-`-c` or `--cidr` expects an IPv4 subnet in CIDR notation
+Range of IPs: `-s 10.10.10.0-10.10.10.5`
 
-`-r` or `--range` expects the start and end IPv4 addresses of a range of IPv4
-addresses separated by `-`
+Range of IPs in CIDR notation: `-s 10.10.10.0/24`
 
-`-d` or `--domains` expects a list of domains separated by `,`
+A domain: `-s example.com` 
+
+A list of domains: `-s example.com,example.org,example.edu`
+
+
 
 and optionally (if not specified, it defaults to `--ports 443`):
 
@@ -58,11 +61,11 @@ Scan the entire 10.10.10.0/24 network on ports 443 and
 Scan the list of domains on port
 123: `certscan --domains [example.com,subdomain.example.com,,moredomains.example.com] -p 123`
 
-### Scheduled mode
+### Scheduled
 
 #### Config
 
-set `-i` or `--ini`: Modifies the `config.ini` configuration and
+set `-c` or `--config`: Modifies the `config.ini` configuration and
 run `certscan -i` without any arguments.
 
 #### Database

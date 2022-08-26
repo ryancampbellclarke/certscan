@@ -2,6 +2,7 @@
 import argparse
 import csv
 import os
+import sys
 from os.path import dirname
 from typing import List
 
@@ -55,8 +56,6 @@ def certscan_direct(args):
     """
     (scan_method, scan_target, port_scan_method,
      port_scan_target) = options.parse_inputs(args)
-    # (scan_method, scan_target) = options.parse_scan_input(args)
-    # (port_scan_method, port_scan_target) = options.parse_port_scan_input(args)
     scanner = Scanner(scan_method, scan_target, port_scan_method,
                       port_scan_target, quiet=args.quiet,
                       print_as_json=args.json, show_all_certs=args.all)
@@ -65,6 +64,11 @@ def certscan_direct(args):
     # output to csv if flag set
     if args.output:
         write_list_of_certs_to_file(discovered_certs, args.output)
+
+
+def print_args_help(parser):
+    parser.print_help(sys.stderr)
+    sys.exit(1)
 
 
 def write_list_of_certs_to_file(discovered_certs: List[ScannedCertificate],
