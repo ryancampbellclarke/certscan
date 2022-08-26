@@ -56,7 +56,11 @@ class Scanner:
                                               port=port)
         except TimeoutError as e:
             # This is fine. When scanning, ignore failures unless specified
-            # TODO Flag to enable failure logging
+            # TODO Flag to enable error logging
+            pass
+        except ConnectionResetError as e:
+            # Common response from servers
+            # TODO Flag to enable error logging
             pass
         return None
 
