@@ -4,6 +4,8 @@ import sys
 from src.helpers import certscan_direct, certscan_config, certscan_database, \
     get_args, print_args_help
 
+VERSION="v0.3.0-alpha"
+
 if __name__ == '__main__':
     # Setup argument parser
     parser = argparse.ArgumentParser()
@@ -13,7 +15,9 @@ if __name__ == '__main__':
     if len(sys.argv) == 1:
         print_args_help(parser)
 
-    if args.database:
+    if args.version:
+        print(VERSION)
+    elif args.database:
         # Use scanners configured in database configured in database.ini file
         certscan_database(args)
     elif args.ini:

@@ -30,6 +30,8 @@ def get_args(parser):
                         help="Print all certificate scans to stdout, found and "
                              "not-found certificates. Prints in json if -j "
                              "option set")
+    parser.add_argument("-v", "--version", action='store_true',
+                        help="Software version")
 
     return parser.parse_args()
 
