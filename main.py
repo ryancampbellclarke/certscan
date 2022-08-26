@@ -40,10 +40,9 @@ if __name__ == '__main__':
         (scan_method, scan_target) = options.parse_scan_input(args)
         (port_scan_method, port_scan_target) = options.parse_port_scan_input(
             args)
-
         scanner = Scanner(scan_method, scan_target, port_scan_method,
-                          port_scan_target, quiet=args.quiet, print_as_json=args.json)
-
+                          port_scan_target, quiet=args.quiet,
+                          print_as_json=args.json)
         discovered_certs = scanner.start_scan()
 
         # output to csv if flag set

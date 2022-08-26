@@ -23,6 +23,7 @@ class ScanMethod(int, Enum):
 
 
 DEFAULT_PORT_TARGET = "443"
+DEFAULT_TIMEOUT = 2
 
 
 class Scanner:
@@ -34,18 +35,25 @@ class Scanner:
     print_as_json: bool = False
 
     @staticmethod
-    def scan(target, port):
+    def __scan(target, port):
         context = ssl.create_default_context()
         # set context so it can receive valid certificate
         context.check_hostname = False
         context.verify_mode = ssl.CERT_NONE
-
-        with socket.create_connection(address=(target, port)) as sock:
-            with context.wrap_socket(sock=sock,
-                                     server_hostname=target) as wrapped_sock:
-                der_cert = wrapped_sock.getpeercert(True)
-                cert = x509.load_der_x509_certificate(der_cert)
-                return ScannedCertificate(cert=cert, target=target, port=port)
+        try:
+            with socket.create_connection(address=(target, port),
+                                          timeout=DEFAULT_TIMEOUT) as sock:
+                with context.wrap_socket(sock=sock,
+                                         server_hostname=target) as wrapped_sock:
+                    der_cert = wrapped_sock.getpeercert(True)
+                    cert = x509.load_der_x509_certificate(der_cert)
+                    return ScannedCertificate(cert=cert, target=target,
+                                              port=port)
+        except TimeoutError as e:
+            # This is fine. When scanning, ignore failures unless specified
+            # TODO Flag to enable failures
+            pass
+        return None
 
     def __nmap_port_discovery(self):
         # TODO Implement NMAP port discovery
@@ -69,12 +77,13 @@ class Scanner:
         discovered_certs = []
         for target in targets:
             for port in ports:
-                discovered_cert = Scanner.scan(target, port)
-                discovered_certs.append(discovered_cert)
-                if not self.quiet:
-                    print(discovered_cert.to_string())
-                if self.print_as_json:
-                    print(discovered_cert.to_json())
+                discovered_cert = Scanner.__scan(target, port)
+                if discovered_cert is not None:
+                    discovered_certs.append(discovered_cert)
+                    if not self.quiet:
+                        print(discovered_cert.to_string())
+                    if self.print_as_json:
+                        print(discovered_cert.to_json())
 
         return discovered_certs
 

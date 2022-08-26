@@ -18,7 +18,7 @@ def write_list_of_certs_to_file(discovered_certs: List[ScannedCertificate],
         # Dir already exists, that's fine.
         pass
     with open(file=filename, mode="w", newline="") as csvfile:
-        writer = csv.writer(csvfile=csvfile)
+        writer = csv.writer(csvfile)
         writer.writerow(
             ['subject', 'target', 'common_name', 'issuer', 'issuer_common_name',
              'not_valid_after', 'not_valid_before', 'serial_number',
