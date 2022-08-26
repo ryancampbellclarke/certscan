@@ -17,32 +17,28 @@ addresses separated by `-`
 
 `-d` or `--domains` expects a list of domains separated by `,`
 
-and optionally (if not specified, it defaults to `--ports 443`) one of these
-port scan types:
+and optionally (if not specified, it defaults to `--ports 443`):
 
 `-p` or `--ports` to specify ports to scan in the form separated by `,`
-
-`-n` or `--nmap` to scan for open ports with nmap, then scan for certificates on
-those open ports
 
 Optional parameters:
 
 Set `-q` or `--quiet` to prevent certificates from printing to std
 
-Set `-q` or `--quiet` to print certificates to stdout as json
+Set `-j` or `--json` to print certificates to stdout as json
 
 Set `-o` or `--output` to have the certificates printed to a CSV. If no path is
 passed the file will be created at `output/certificates.csv`
 
 Examples:
 
-`certscan --single 10.10.10.10 --ports 443`
 
-`certscan --cidr 10.10.10.0/24 --ports 443,636`
 
-`certscan --range 10.10.10.0-10.10.10.255 --nmap`
+Scan only 10.10.10.10 port 443: `certscan --single 10.10.10.10`
 
-`certscan --domains [example.com,subdomain.example.com, ... ,moredomains.example.com] --nmap`
+Scan the entire 10.10.10.0/24 network on ports 443 and 636: `certscan --cidr 10.10.10.0/24 --ports 443,636`
+
+Scan the list of domains on port 123: `certscan --domains [example.com,subdomain.example.com,,moredomains.example.com] -p 123`
 
 ### Scheduled mode
 

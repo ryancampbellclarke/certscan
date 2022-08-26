@@ -11,8 +11,7 @@ from src.certificate import ScannedCertificate
 
 
 class PortScanMethod(int, Enum):
-    nmap = 0,
-    specific_ports = 1
+    specific_ports = 0
 
 
 class ScanMethod(int, Enum):
@@ -60,11 +59,6 @@ class Scanner:
             pass
         return None
 
-    def __nmap_port_discovery(self):
-        # TODO Implement NMAP port discovery
-        raise NotImplementedError(
-            "Will use nmap function to find ports to scan")
-
     def start_scan(self):
         """
         Starts scan defined in this object. Scans a list of ports on target
@@ -76,9 +70,7 @@ class Scanner:
         targets = self.scan_target
 
         # Set scan ports
-        if self.port_scan_method == PortScanMethod.nmap:
-            ports = self.__nmap_port_discovery()
-        elif self.port_scan_method == PortScanMethod.specific_ports:
+        if self.port_scan_method == PortScanMethod.specific_ports:
             ports = self.port_scan_target
         else:
             ports = [int(DEFAULT_PORT_TARGET)]

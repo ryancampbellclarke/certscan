@@ -36,9 +36,6 @@ def port_scan_group(parser):
     group = parser.add_mutually_exclusive_group()
     group.add_argument("-p", "--ports", type=str,
                        help="List of ports to scan on each host")
-    group.add_argument("-n", "--nmap", action='store_true',
-                       help="Use nmap to scan for ports that are open on each "
-                            "host")
     return parser
 
 
@@ -75,9 +72,7 @@ def parse_port_scan_input(args):
     Parses the arguments passed to determine which one was selected and returns
     the data associated.
     """
-    if args.nmap:
-        return (scanner.PortScanMethod.nmap, None)
-    elif args.ports:
+    if args.ports:
         return (scanner.PortScanMethod.specific_ports, args.ports)
     else:
         return (
