@@ -1,11 +1,13 @@
+import json
 from datetime import datetime
 from typing import List
 
 from cryptography.hazmat._oid import ExtensionOID
-from cryptography.x509 import Certificate
+from cryptography.x509 import Certificate, ExtensionNotFound
 
 
 class ScannedCertificate:
+    target: str
     subject: str
     common_name: str
     issuer: str
@@ -35,12 +37,17 @@ class ScannedCertificate:
                f"Not Valid After:               {self.not_valid_after} \n"
 
     def __read_sans_from_cert(self, cert):
-        SANs = cert.extensions.get_extension_for_oid(
-            ExtensionOID.SUBJECT_ALTERNATIVE_NAME)
-        subject_alternative_names = []
-        for san in SANs.value:
-            subject_alternative_names.append(san.value)
-        return subject_alternative_names
+        try:
+            SANs = cert.extensions.get_extension_for_oid(
+                ExtensionOID.SUBJECT_ALTERNATIVE_NAME)
+            subject_alternative_names = []
+            for san in SANs.value:
+                subject_alternative_names.append(san.value)
+            return subject_alternative_names
+        except ExtensionNotFound:
+            # This is normal when there are no SANs
+            return []
+
 
     def __issuer_common_name_from_cert(self, cert):
         for item in cert.issuer.rdns:
@@ -48,7 +55,11 @@ class ScannedCertificate:
             if str_item.startswith("CN="):
                 return str_item.replace("CN=", "")
 
-    def __init__(self, cert: Certificate, port: int = 443):
+    def to_json(self):
+            return json.dumps(self.__dict__, indent=4, sort_keys=True, default=str)
+
+    def __init__(self, cert: Certificate, target: str, port: int = 443):
+        self.target = target
         self.subject = cert.subject.rfc4514_string()
         self.common_name = self.__common_name_from_cert(cert)
         self.issuer = cert.issuer.rfc4514_string()

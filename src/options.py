@@ -58,6 +58,16 @@ def port_scan_group(parser):
     return parser
 
 
+def print_group(parser):
+    group = parser.add_mutually_exclusive_group()
+    group.add_argument("-q", "--quiet", action='store_true',
+                       help="Turn off printing discovered certificates to"
+                            " stdout")
+    group.add_argument("-j", "--json", action='store_true',
+                       help=f"Output discovered certificates to std as json")
+    return parser
+
+
 def parse_scan_input(args):
     """
     Parses the arguments passed to determine which one was selected and returns

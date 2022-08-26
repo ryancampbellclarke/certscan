@@ -31,6 +31,7 @@ class Scanner:
     port_scan_method: PortScanMethod
     port_scan_target: List[int] = []
     quiet: bool = False
+    print_as_json: bool = False
 
     @staticmethod
     def scan(target, port):
@@ -39,12 +40,12 @@ class Scanner:
         context.check_hostname = False
         context.verify_mode = ssl.CERT_NONE
 
-        with socket.create_connection((target, port)) as sock:
-            with context.wrap_socket(sock,
+        with socket.create_connection(address=(target, port)) as sock:
+            with context.wrap_socket(sock=sock,
                                      server_hostname=target) as wrapped_sock:
                 der_cert = wrapped_sock.getpeercert(True)
                 cert = x509.load_der_x509_certificate(der_cert)
-                return ScannedCertificate(cert, port)
+                return ScannedCertificate(cert=cert, target=target, port=port)
 
     def __nmap_port_discovery(self):
         # TODO Implement NMAP port discovery
@@ -72,6 +73,8 @@ class Scanner:
                 discovered_certs.append(discovered_cert)
                 if not self.quiet:
                     print(discovered_cert.to_string())
+                if self.print_as_json:
+                    print(discovered_cert.to_json())
 
         return discovered_certs
 
@@ -111,7 +114,7 @@ class Scanner:
     def __init__(self, scan_method: ScanMethod, scan_target: str,
                  port_scan_method: PortScanMethod,
                  port_scan_target: str,
-                 quiet: bool=False):
+                 quiet: bool = False, print_as_json=False):
         self.scan_method = scan_method
         self.port_scan_method = port_scan_method
         self.scan_target = self.__convert_scan_target_str_to_list(scan_target,
@@ -119,3 +122,8 @@ class Scanner:
         self.port_scan_target = self.__convert_port_scan_target_str_to_list(
             port_scan_target)
         self.quiet = quiet
+
+        if print_as_json:
+            # Set quiet automatically if json selected
+            self.print_as_json = print_as_json
+            self.quiet = True

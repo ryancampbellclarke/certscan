@@ -29,6 +29,8 @@ Optional parameters:
 
 Set `-q` or `--quiet` to prevent certificates from printing to std
 
+Set `-q` or `--quiet` to print certificates to stdout as json
+
 Set `-o` or `--output` to have the certificates printed to a CSV. If no path is
 passed the file will be created at `output/certificates.csv`
 
