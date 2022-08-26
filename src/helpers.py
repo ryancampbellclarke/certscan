@@ -29,6 +29,7 @@ def get_args(parser):
 
     return parser.parse_args()
 
+
 def certscan_config(args):
     # TODO read config.ini for scanner configuration
     raise NotImplementedError(

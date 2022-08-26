@@ -4,12 +4,11 @@ import os
 import sys
 from os.path import dirname
 
-from src.helpers import write_list_of_certs_to_file, DEFAULT_FILE_OUT, \
-    certscan_direct, certscan_config, certscan_database, get_args
-from src.scanner import Scanner
-from src import options
+from src.helpers import certscan_direct, certscan_config, certscan_database, \
+    get_args
 
 if __name__ == '__main__':
+    # Setup argument parser
     parser = argparse.ArgumentParser()
     args = get_args(parser)
 
@@ -27,6 +26,3 @@ if __name__ == '__main__':
     else:
         # Use scanner requested from arguments, output to stdout or csv
         certscan_direct(args)
-
-
-
