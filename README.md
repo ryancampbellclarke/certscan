@@ -4,6 +4,11 @@ Certificate Scanner. Find certificates on your network.
 
 ## Installation
 
+### Python interpreter
+
+1. Download source
+2. In source directory run as `python main.py`
+
 ### Windows
 
 #### Binary
