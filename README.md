@@ -1,6 +1,16 @@
-# CertScan
+# certscan
 
 Certificate Scanner. Find certificates on your network.
+
+* [Installation](#Installation)
+  * [Python interpreter](#python-interpreter)
+  * [Windows](#windows)
+* [Usage](#usage)
+  * [Single Scan](#single-Scan)
+  * [Scheduled](#scheduled)
+    * [Config](#config)
+    * [Database](#database)
+* [Build](#build)
 
 ## Installation
 
@@ -23,7 +33,9 @@ Certificate Scanner. Find certificates on your network.
 3. [OPTIONAL] [Add the extracted folder to PATH](https://www.architectryan.com/2018/03/17/add-to-the-path-on-windows-10/)
 4. If you added to path, run with `certscan`. Otherwise, run `certscan.exe` from the installation folder or with the absolute path.
 
-## Run modes
+## Usage
+
+`usage: certscan.exe [-h] [-s SCAN | -db | -c] [-p PORTS] [-q | -j] [-o [OUTPUT]] [-a] [-v]`
 
 ### Single Scan
 
@@ -39,22 +51,20 @@ A domain: `-s example.com`
 
 A list of domains: `-s example.com,example.org,example.edu`
 
-
-
 and optionally (if not specified, it defaults to `--ports 443`):
 
 `-p` or `--ports` to specify ports to scan in the form separated by `,`
 
-Optional parameters:
+#### Optional parameters:
 
-Set `-q` or `--quiet` to prevent certificates from printing to std
+`-q` or `--quiet` to prevent certificates from printing to std
 
-Set `-j` or `--json` to print certificates to stdout as json
+`-j` or `--json` to print certificates to stdout as json
 
-Set `-o` or `--output` to have the certificates printed to a CSV. If no path is
+`-o` or `--output` to have the certificates printed to a CSV. If no path is
 passed the file will be created at `output/certificates.csv`
 
-Set `-a` or `--all` to include certificates not found in scan
+`-a` or `--all` to include certificates not found in scan
 
 Examples:
 
