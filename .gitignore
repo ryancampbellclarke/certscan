@@ -12,6 +12,9 @@ __pycache__/
 # CSV Output
 output/
 
+# CSV test output
+tests/testout/
+
 # Distribution / packaging
 .Python
 build/
