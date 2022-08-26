@@ -7,7 +7,7 @@ import ssl
 
 from cryptography.hazmat._oid import ExtensionOID
 
-from src.certificate import ScannedCertificate
+from src.certificate import ScannedCertificate, ScannedCertificateStub
 
 
 class PortScanMethod(int, Enum):
@@ -32,6 +32,7 @@ class Scanner:
     port_scan_target: List[int] = []
     quiet: bool = False
     print_as_json: bool = False
+    show_all_certs: bool = False
 
     @staticmethod
     def __scan(target, port):
@@ -85,6 +86,11 @@ class Scanner:
                         print(discovered_cert.to_string())
                     if self.print_as_json:
                         print(discovered_cert.to_json())
+                elif (self.show_all_certs):
+                    if not self.quiet:
+                        print(ScannedCertificateStub(target, port).to_string())
+                    if self.print_as_json:
+                        print(ScannedCertificateStub(target, port).to_json())
 
         return discovered_certs
 
@@ -131,7 +137,8 @@ class Scanner:
     def __init__(self, scan_method: ScanMethod, scan_target: str,
                  port_scan_method: PortScanMethod,
                  port_scan_target: str,
-                 quiet: bool = False, print_as_json=False):
+                 quiet: bool = False, print_as_json=False,
+                 show_all_certs=False):
         self.scan_method = scan_method
         self.port_scan_method = port_scan_method
         self.scan_target = self.__convert_scan_target_str_to_list(scan_target,
@@ -144,3 +151,4 @@ class Scanner:
             # Set quiet automatically if json selected
             self.print_as_json = print_as_json
             self.quiet = True
+        self.show_all_certs = show_all_certs

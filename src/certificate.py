@@ -6,6 +6,30 @@ from cryptography.hazmat._oid import ExtensionOID
 from cryptography.x509 import Certificate, ExtensionNotFound
 
 
+class ScannedCertificateStub:
+    target: str
+    port: int
+    status: str = "Not found"
+
+    def to_string(self):
+        """
+        Converts object to string with fields of common interest
+        """
+        return f"Target:                        {self.target} \n" \
+               f"Port:                          {self.port} \n" \
+               f"Status:                        {self.status} \n"
+
+    def to_json(self):
+        """
+        Dumps object's json representation
+        """
+        return json.dumps(self.__dict__, indent=4, sort_keys=True, default=str)
+
+    def __init__(self, target, port):
+        self.target = target
+        self.port = port
+
+
 class ScannedCertificate:
     target: str
     subject: str
@@ -29,15 +53,15 @@ class ScannedCertificate:
             if str_item.startswith("CN="):
                 return str_item.replace("CN=", "")
 
-
     def to_string(self):
         """
         Converts object to string with fields of common interest
         """
         san_string = ', '.join(map(str, self.subject_alternative_names))
-        return f"Common name:                   {self.common_name} \n" \
-               f"Issuer common name:            {self.issuer_common_name} \n" \
+        return f"Target:                        {self.target} \n" \
                f"Port:                          {self.port} \n" \
+               f"Common name:                   {self.common_name} \n" \
+               f"Issuer common name:            {self.issuer_common_name} \n" \
                f"Subject Alternative Names:     {san_string} \n" \
                f"Not Valid Before:              {self.not_valid_before} \n" \
                f"Not Valid After:               {self.not_valid_after} \n"
@@ -56,7 +80,6 @@ class ScannedCertificate:
         except ExtensionNotFound:
             # This is normal when there are no SANs
             return []
-
 
     def __issuer_common_name_from_cert(self, cert):
         """

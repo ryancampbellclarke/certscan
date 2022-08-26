@@ -30,15 +30,17 @@ Set `-j` or `--json` to print certificates to stdout as json
 Set `-o` or `--output` to have the certificates printed to a CSV. If no path is
 passed the file will be created at `output/certificates.csv`
 
+Set `-a` or `--all` to include certificates not found in scan
+
 Examples:
-
-
 
 Scan only 10.10.10.10 port 443: `certscan --single 10.10.10.10`
 
-Scan the entire 10.10.10.0/24 network on ports 443 and 636: `certscan --cidr 10.10.10.0/24 --ports 443,636`
+Scan the entire 10.10.10.0/24 network on ports 443 and
+636: `certscan --cidr 10.10.10.0/24 --ports 443,636`
 
-Scan the list of domains on port 123: `certscan --domains [example.com,subdomain.example.com,,moredomains.example.com] -p 123`
+Scan the list of domains on port
+123: `certscan --domains [example.com,subdomain.example.com,,moredomains.example.com] -p 123`
 
 ### Scheduled mode
 

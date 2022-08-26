@@ -77,3 +77,13 @@ def parse_port_scan_input(args):
     else:
         return (
             scanner.PortScanMethod.specific_ports, scanner.DEFAULT_PORT_TARGET)
+
+
+def parse_inputs(args):
+    """
+
+    """
+    (scan_method, scan_target) = parse_scan_input(args)
+    (port_scan_method, port_scan_target) = parse_port_scan_input(args)
+    return (scan_method, scan_target, port_scan_method,
+            port_scan_target)
