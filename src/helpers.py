@@ -55,8 +55,6 @@ def certscan_direct(args):
     """
     (scan_method, scan_target, port_scan_method,
      port_scan_target) = options.parse_inputs(args)
-    # (scan_method, scan_target) = options.parse_scan_input(args)
-    # (port_scan_method, port_scan_target) = options.parse_port_scan_input(args)
     scanner = Scanner(scan_method, scan_target, port_scan_method,
                       port_scan_target, quiet=args.quiet,
                       print_as_json=args.json, show_all_certs=args.all)
