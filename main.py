@@ -20,7 +20,7 @@ if __name__ == '__main__':
     elif args.database:
         # Use scanners configured in database configured in database.ini file
         certscan_database(args)
-    elif args.ini:
+    elif args.config:
         # Use scanners configured in config.ini file
         certscan_config(args)
     elif args.scan:
