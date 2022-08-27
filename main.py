@@ -4,7 +4,7 @@ import sys
 from src.helpers import certscan_direct, certscan_config, certscan_database, \
     get_args, print_args_help
 
-VERSION="v0.3.0-alpha"
+VERSION="v0.4.0-alpha"
 
 if __name__ == '__main__':
     # Setup argument parser
