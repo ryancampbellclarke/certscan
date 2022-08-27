@@ -14,7 +14,7 @@ Certificate Scanner. Find certificates on your network.
 
 ## Usage
 
-`usage: certscan.exe [-h] [-s SCAN | -db | -c] [-p PORTS] [-q | -j] [-o [OUTPUT]] [-a] [-v]`
+`usage: certscan.exe [-h] [-s SCAN | -d | -c] [-p PORTS] [-q | -j] [-o [OUTPUT]] [-a] [-v]`
 
 ### Single Scan
 
@@ -67,7 +67,7 @@ set `-c` or `--config`: Creates scanners defined in `conf/config.ini`
 
 **NOTE:** On roadmap, not yet implemented. Issue #23
 
-set `-db` or `--database`: Connects to `conf/database.ini` to discover scanner
+set `-d` or `--database`: Connects to `conf/database.ini` to discover scanner
 information.
 
 ## Installation

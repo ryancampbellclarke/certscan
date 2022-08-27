@@ -4,7 +4,7 @@ import sys
 from src.helpers import certscan_direct, certscan_config, certscan_database, \
     get_args, print_args_help
 
-VERSION="v0.3.0-alpha"
+VERSION="v0.4.0-alpha"
 
 if __name__ == '__main__':
     # Setup argument parser
@@ -20,7 +20,7 @@ if __name__ == '__main__':
     elif args.database:
         # Use scanners configured in database configured in database.ini file
         certscan_database(args)
-    elif args.ini:
+    elif args.config:
         # Use scanners configured in config.ini file
         certscan_config(args)
     elif args.scan:

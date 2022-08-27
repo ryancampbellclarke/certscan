@@ -12,24 +12,13 @@ def scan_type_group(parser):
     Sets up Scan Type arguments related to configuring a certscan run
     """
     group = parser.add_mutually_exclusive_group()
-    # group.add_argument("-s", "--single", type=str,
-    #                    help="Scan the given domain name or IPv4 address")
-    # group.add_argument("-c", "--cidr", type=str,
-    #                    help="Scan the given CIDR notated (e.g. 10.10.10.0/24) "
-    #                         "subnet")
-    # group.add_argument("-r", "--range", type=str,
-    #                    help="Scan inclusively the range of two IP addresses "
-    #                         "delimited by '-'")
-    # group.add_argument("-d", "--domains", type=str,
-    #                    help="Scan inclusively a list of domains separated by "
-    #                         "`,`")
     group.add_argument("-s", "--scan", type=str,
                        help="Scan a single IP: 10.10.10.10, a range of IPs: "
                             "10.10.10.10-10.10.10.20, a range of IPs by CIDR "
                             "notation: 10.10.10.0/24, or a list of domains: "
                             "example.com,example.org,example.edu"
                             "`,`")
-    group.add_argument("-db", "--database", action='store_true',
+    group.add_argument("-d", "--database", action='store_true',
                        help="Read scanner configuration from database defined "
                             "in database.ini")
     group.add_argument("-c", "--config", action='store_true',
@@ -65,7 +54,6 @@ def parse_scan_input(args):
     Parses the arguments passed to determine which one was selected and returns
     the data associated.
     """
-    #isIpAddress = False
     # Determine if it is an IP address
     try:
         ipaddress.ip_address(args.scan)
