@@ -87,7 +87,8 @@ class Scanner:
                 if discovered_cert is not None:
                     discovered_certs.append(discovered_cert)
                     if not self.quiet:
-                        print(discovered_cert.to_string(truncate=True))
+                        print(discovered_cert.to_string(
+                            truncate_subject_alternative_names=True))
                     if self.print_as_json:
                         print(discovered_cert.to_json())
                 elif (self.show_all_certs):
