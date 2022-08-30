@@ -89,13 +89,9 @@ class Scanner:
                     if not self.quiet:
                         print(discovered_cert.to_string(
                             truncate_subject_alternative_names=True))
-                    if self.print_as_json:
-                        print(discovered_cert.to_json())
                 elif (self.show_all_certs):
                     if not self.quiet:
                         print(ScannedCertificateStub(target, port).to_string())
-                    if self.print_as_json:
-                        print(ScannedCertificateStub(target, port).to_json())
 
         return discovered_certs
 

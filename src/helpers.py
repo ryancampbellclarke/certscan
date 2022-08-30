@@ -1,6 +1,7 @@
 # write to csv
 import argparse
 import csv
+import json
 import os
 import sys
 from os.path import dirname
@@ -51,6 +52,10 @@ def certscan_database(args):
         "Will read database (defined in database.ini) for scanner "
         "configuration")
 
+def dump_all_discovered_certs_in_json(discovered_certs):
+    return json.dumps(
+        [disc_cert.__dict__ for disc_cert in discovered_certs], indent=4,
+        sort_keys=True, default=str)
 
 def certscan_direct(args):
     """
@@ -62,6 +67,9 @@ def certscan_direct(args):
                       port_scan_target, quiet=args.quiet,
                       print_as_json=args.json, show_all_certs=args.all)
     discovered_certs = scanner.start_scan()
+
+    if args.json:
+        print(dump_all_discovered_certs_in_json(discovered_certs))
 
     # output to csv if flag set
     if args.output:
