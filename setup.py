@@ -3,7 +3,7 @@ import py2exe
 
 setup(console = [
     {
-        "script": "main.py",
+        "script": "certscan.py",
         "dest_base" : "certscan"
     }],
 
