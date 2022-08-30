@@ -5,6 +5,18 @@ from src.scanner import Scanner, PortScanMethod, ScanMethod
 # computer cannot connect to the network.
 # Please suggest a better way of doing this if you can think of it.
 
+def test_multiple_ports_scan():
+    # Targets github.com
+    scan_method = ScanMethod.domains
+    scan_target="github.com"
+    port_scan_method=PortScanMethod.specific_ports
+    port_scan_target="80,443"
+    scanner = Scanner(scan_method, scan_target, port_scan_method,
+                      port_scan_target, show_all_certs=True)
+    discovered_certs = scanner.start_scan()
+    assert len(discovered_certs) == 1
+    assert discovered_certs[0].common_name == scan_target
+
 def test_domain_scan():
     # Targets github.com
     scan_method = ScanMethod.domains
