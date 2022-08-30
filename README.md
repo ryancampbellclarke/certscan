@@ -80,14 +80,8 @@ information.
 ### Windows
 
 #### Binary
-1. Download binary from Releases page on Github.
+1. Download binary from [Releases page on Github](https://github.com/ryancampbellclarke/certscan/releases).
 2. Extract archive to installation folder
-3. [OPTIONAL] [Add the extracted folder to PATH](https://www.architectryan.com/2018/03/17/add-to-the-path-on-windows-10/)
-4. If you added to path, run with `certscan`. Otherwise, run `certscan.exe` from the installation folder or with the absolute path.
-
-#### Build from source
-1. Follow build instructions in [Build section](#build)
-2. Copy the generated `dist/` folder to where you'd like to install it
 3. [OPTIONAL] [Add the extracted folder to PATH](https://www.architectryan.com/2018/03/17/add-to-the-path-on-windows-10/)
 4. If you added to path, run with `certscan`. Otherwise, run `certscan.exe` from the installation folder or with the absolute path.
 
