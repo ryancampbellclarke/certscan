@@ -29,3 +29,5 @@ if __name__ == '__main__':
     else:
         # If reached here, something went wrong, print help
         print_args_help(parser)
+
+    print("garbage data")
