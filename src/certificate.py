@@ -56,11 +56,19 @@ class ScannedCertificate:
             if str_item.startswith("CN="):
                 return str_item.replace("CN=", "")
 
-    def to_string(self):
+    def to_string(self, truncate: bool = False):
         """
         Converts object to string with fields of common interest
         """
-        san_string = ', '.join(map(str, self.subject_alternative_names))
+        TRUNCATE_SIZE = 30
+        san_length = len(self.subject_alternative_names)
+        if truncate and san_length > TRUNCATE_SIZE:
+                san_string = ', '.join(map(str, self.subject_alternative_names[:TRUNCATE_SIZE]))
+                san_string += f", [...and {san_length - TRUNCATE_SIZE} more names]"
+        else:
+            san_string = ', '.join(map(str, self.subject_alternative_names))
+
+
         return f"Target:                        {self.target} \n" \
                f"Port:                          {self.port} \n" \
                f"Common name:                   {self.common_name} \n" \
