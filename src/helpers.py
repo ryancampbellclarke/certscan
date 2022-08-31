@@ -20,13 +20,20 @@ def get_args(parser):
     Use scanners configured in database configured in database.ini file
     """
     parser = argparse.ArgumentParser()
-    parser = options.scan_type_group(parser)
     parser = options.port_scan_group(parser)
     parser = options.print_group(parser)
+    parser.add_argument("scan_target", type=str,
+                       help="Target of discovery scan. "
+                            "Formats: Single IP: '10.10.10.10', "
+                            "Single domain: 'example.com', "
+                            "List of IPs: '10.10.10.10,10.10.10.20,10.10.10.30', "
+                            "Range of IPs: '10.10.10.10-10.10.10.20', "
+                            "Range of IPs by CIDR notation: '10.10.10.0/24', "
+                            "List of domains: 'example.com,example.org,example.edu'")
     parser.add_argument("-o", "--output", nargs='?', const=DEFAULT_FILE_OUT,
                         help=f"Output discovered certificates to "
                              f"{DEFAULT_FILE_OUT}"
-                             f" or specified path")
+                             f" or (optional) specified path")
     parser.add_argument("-a", "--all", action='store_true',
                         help="Print all certificate scans to stdout, found and "
                              "not-found certificates. Prints in json if -j "
