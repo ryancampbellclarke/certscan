@@ -1,8 +1,7 @@
 import argparse
 import sys
 
-from src.helpers import certscan_direct, certscan_config, certscan_database, \
-    get_args, print_args_help
+from src.helpers import certscan_direct, get_args, print_args_help
 
 VERSION="v0.5.0"
 
@@ -17,12 +16,6 @@ if __name__ == '__main__':
 
     if args.version:
         print(VERSION)
-    elif args.database:
-        # Use scanners configured in database configured in database.ini file
-        certscan_database(args)
-    elif args.config:
-        # Use scanners configured in config.ini file
-        certscan_config(args)
     elif args.scan:
         # Use scanner requested from arguments, output to stdout and/or csv
         certscan_direct(args)

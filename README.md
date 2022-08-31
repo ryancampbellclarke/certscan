@@ -12,14 +12,12 @@ Certificate Scanner. Find certificates on your network.
 ## Usage
 
 ```commandline
-usage: certscan.py [-h] [-s SCAN | -d | -c] [-p PORTS] [-q | -j] [-o [OUTPUT]] [-a] [-v]
+usage: certscan.py [-h] [-s SCAN] [-p PORTS] [-q | -j] [-o [OUTPUT]] [-a] [-v]
 
 options:
   -h, --help            show this help message and exit
   -s SCAN, --scan SCAN  Scan a single IP: 10.10.10.10, a single domain: example.com,a list of IPs: 10.10.10.10,10.10.10.20,10.10.10.30, a range of IPs: 10.10.10.10-10.10.10.20, a range of IPs by CIDR notation: 10.10.10.0/24, or a   
                         list of domains: example.com,example.org,example.edu`,`
-  -d, --database        Read scanner configuration from database defined in database.ini
-  -c, --config          Read scanner configuration from config.ini
   -p PORTS, --ports PORTS
                         List of ports to scan on each host
   -q, --quiet           Turn off printing discovered certificates to stdout
@@ -44,7 +42,6 @@ python certscan.py -s example.com -o /path/to/dir/ -q
 
 # Dump output as json
 python certscan.py -s example.com -j
-
 ```
 
 ## Installation

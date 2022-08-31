@@ -37,21 +37,6 @@ def get_args(parser):
     return parser.parse_args()
 
 
-def certscan_config(args):
-    """
-    Use scanners configured in config.ini file
-    """
-    # TODO read config.ini for scanner configuration
-    raise NotImplementedError(
-        "Will read config.ini for scanner configuration")
-
-
-def certscan_database(args):
-    # TODO read database (defined in database.ini) for scanner configuration
-    raise NotImplementedError(
-        "Will read database (defined in database.ini) for scanner "
-        "configuration")
-
 def dump_all_discovered_certs_in_json(discovered_certs):
     return json.dumps(
         [disc_cert.__dict__ for disc_cert in discovered_certs], indent=4,
