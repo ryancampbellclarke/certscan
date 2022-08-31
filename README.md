@@ -14,69 +14,47 @@ Certificate Scanner. Find certificates on your network.
 
 ## Usage
 
-`usage: certscan.exe [-h] [-s SCAN | -d | -c] [-p PORTS] [-q | -j] [-o [OUTPUT]] [-a] [-v]`
+```commandline
+usage: certscan.py [-h] [-s SCAN | -d | -c] [-p PORTS] [-q | -j] [-o [OUTPUT]] [-a] [-v]
 
-### Single Scan
+options:
+  -h, --help            show this help message and exit
+  -s SCAN, --scan SCAN  Scan a single IP: 10.10.10.10, a single domain: example.com,a list of IPs: 10.10.10.10,10.10.10.20,10.10.10.30, a range of IPs: 10.10.10.10-10.10.10.20, a range of IPs by CIDR notation: 10.10.10.0/24, or a   
+                        list of domains: example.com,example.org,example.edu`,`
+  -d, --database        Read scanner configuration from database defined in database.ini
+  -c, --config          Read scanner configuration from config.ini
+  -p PORTS, --ports PORTS
+                        List of ports to scan on each host
+  -q, --quiet           Turn off printing discovered certificates to stdout
+  -j, --json            Output discovered certificates to std as json
+  -o [OUTPUT], --output [OUTPUT]
+                        Output discovered certificates to output/certificates.csv or specified path
+  -a, --all             Print all certificate scans to stdout, found and not-found certificates. Prints in json if -j option set
+  -v, --version         Software version
+```
 
-Run a scan by `-s` or `--scan` with one of the following strings:
+### Examples
 
-Single IP: `-s 10.10.10.10`
+```commandline
+# Get certificate from example.com:443
+python certscan.py -s example.com
 
-List of IPs: `-s 10.10.10.10,10.10.10.20,10.10.10.30`
+# Get certificates from mixed list of IPs and domains on multiple ports
+python certscan.py -s example.com,10.10.10.10,example.edu -p 443,636,1337
 
-Range of IPs: `-s 10.10.10.0-10.10.10.5`
+# Dump to file, silence output
+python certscan.py -s example.com -o /path/to/dir/ -q
 
-Range of IPs in CIDR notation: `-s 10.10.10.0/24`
+# Dump output as json
+python certscan.py -s example.com -j
 
-A domain: `-s example.com` 
-
-A list of domains: `-s example.com,example.org,example.edu`
-
-and optionally (if not specified, it defaults to `--ports 443`):
-
-`-p` or `--ports` to specify ports to scan in the form separated by `,`
-
-#### Optional parameters:
-
-`-q` or `--quiet` to prevent certificates from printing to std
-
-`-j` or `--json` to print certificates to stdout as json
-
-`-o` or `--output` to have the certificates printed to a CSV. If no path is
-passed the file will be created at `output/certificates.csv`
-
-`-a` or `--all` to include certificates not found in scan
-
-Examples:
-
-Scan only 10.10.10.10 port 443: `certscan --single 10.10.10.10`
-
-Scan the entire 10.10.10.0/24 network on ports 443 and
-636: `certscan --cidr 10.10.10.0/24 --ports 443,636`
-
-Scan the list of domains on port
-123: `certscan --domains [example.com,subdomain.example.com,,moredomains.example.com] -p 123`
-
-### Scheduled
-
-#### Config
-
-**NOTE:** On roadmap, not yet implemented. Issue #22
-
-set `-c` or `--config`: Creates scanners defined in `conf/config.ini`
-
-#### Database
-
-**NOTE:** On roadmap, not yet implemented. Issue #23
-
-set `-d` or `--database`: Connects to `conf/database.ini` to discover scanner
-information.
+```
 
 ## Installation
 
 ### Python interpreter
 
-```
+```commandline
 # clone certscan repo
 git clone git@github.com:ryancampbellclarke/certscan.git
 
@@ -90,14 +68,14 @@ python certscan.py
 ### Binary
 1. Download binary from [Releases page on Github](https://github.com/ryancampbellclarke/certscan/releases).
 2. Extract archive to installation folder
-3. Optional: [Add the extracted folder to PATH](https://www.architectryan.com/2018/03/17/add-to-the-path-on-windows-10/)
-4. If you added to path, run with `certscan`. Otherwise, run `certscan.exe` from the installation folder or with the absolute path to `certscan.exe`.
+3. Optional: Add the extracted folder to PATH
+4. If you added to path, run with `certscan`. Otherwise, run the `certscan` binary from the installation folder.
 
 ## Build binary
 
 Use nuitka to build binary:
 
-```
+```commandline
 # clone certscan repo
 git clone git@github.com:ryancampbellclarke/certscan.git
 
