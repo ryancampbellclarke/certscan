@@ -6,6 +6,7 @@ Certificate Scanner. Find certificates on your network.
 
 * [Usage](#usage)
 * [Installation](#installation)
+* [Tests](#tests)
 * [Build Binary](#build-binary)
 
 ## Usage
@@ -66,6 +67,10 @@ python certscan.py
 2. Extract archive to installation folder
 3. Optional: Add the extracted folder to PATH
 4. If you added to path, run with `certscan`. Otherwise, run the `certscan` binary from the installation folder.
+
+## Tests
+
+Run tests with `pytest`
 
 ## Build binary
 
