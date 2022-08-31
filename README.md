@@ -12,18 +12,20 @@ Certificate Scanner. Find certificates on your network.
 ## Usage
 
 ```commandline
-usage: certscan.py [-h] [-s SCAN] [-p PORTS] [-q | -j] [-o [OUTPUT]] [-a] [-v]
+usage: certscan.py [-h] [-p PORTS] [-q | -j] [-o [OUTPUT]] [-a] [-v] scan_target
+
+positional arguments:
+  scan_target           Target of discovery scan. Formats: Single IP: '10.10.10.10', Single domain: 'example.com', List of IPs: '10.10.10.10,10.10.10.20,10.10.10.30', Range of IPs: '10.10.10.10-10.10.10.20', Range of IPs by CIDR    
+                        notation: '10.10.10.0/24', List of domains: 'example.com,example.org,example.edu'
 
 options:
   -h, --help            show this help message and exit
-  -s SCAN, --scan SCAN  Scan a single IP: 10.10.10.10, a single domain: example.com,a list of IPs: 10.10.10.10,10.10.10.20,10.10.10.30, a range of IPs: 10.10.10.10-10.10.10.20, a range of IPs by CIDR notation: 10.10.10.0/24, or a   
-                        list of domains: example.com,example.org,example.edu`,`
   -p PORTS, --ports PORTS
                         List of ports to scan on each host
   -q, --quiet           Turn off printing discovered certificates to stdout
   -j, --json            Output discovered certificates to std as json
   -o [OUTPUT], --output [OUTPUT]
-                        Output discovered certificates to output/certificates.csv or specified path
+                        Output discovered certificates to output/certificates.csv or (optional) specified path
   -a, --all             Print all certificate scans to stdout, found and not-found certificates. Prints in json if -j option set
   -v, --version         Software version
 ```
