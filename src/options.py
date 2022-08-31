@@ -3,24 +3,9 @@ import ipaddress
 from src import scanner
 
 """
-Helper functions to implement command line options and to organize them for further parsing.
+Helper functions to implement command line options and to organize them for 
+further parsing.
 """
-
-
-def scan_type_group(parser):
-    """
-    Sets up Scan Type arguments related to configuring a certscan run
-    """
-    group = parser.add_mutually_exclusive_group()
-    group.add_argument("-s", "--scan", type=str,
-                       help="Scan a single IP: 10.10.10.10, a single domain:"
-                            " example.com,a list of IPs: 10.10.10.10,"
-                            "10.10.10.20,10.10.10.30, a range of IPs: "
-                            "10.10.10.10-10.10.10.20, a range of IPs by CIDR "
-                            "notation: 10.10.10.0/24, or a list of domains: "
-                            "example.com,example.org,example.edu"
-                            "`,`")
-    return parser
 
 
 def port_scan_group(parser):
@@ -53,20 +38,20 @@ def parse_scan_input(args):
     """
     # Determine if it is an IP address
     try:
-        ipaddress.ip_address(args.scan)
+        ipaddress.ip_address(args.scan_target)
         isIpAddress = True
     except ValueError:
         isIpAddress = False
 
     if isIpAddress:
-        return (scanner.ScanMethod.single, args.scan)
-    elif "/" in args.scan:
+        return (scanner.ScanMethod.single, args.scan_target)
+    elif "/" in args.scan_target:
         # Only CIDR should have "/"
-        return (scanner.ScanMethod.cidr, args.scan)
-    elif "-" in args.scan:
-        return (scanner.ScanMethod.range, args.scan)
+        return (scanner.ScanMethod.cidr, args.scan_target)
+    elif "-" in args.scan_target:
+        return (scanner.ScanMethod.range, args.scan_target)
     else:
-        return (scanner.ScanMethod.domains, args.scan)
+        return (scanner.ScanMethod.domains, args.scan_target)
 
 
 def parse_port_scan_input(args):
