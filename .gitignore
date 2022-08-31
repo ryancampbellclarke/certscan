@@ -6,9 +6,10 @@ __pycache__/
 # SQLite db
 *.db
 
-# Nuitka build directories
+# Nuitka build directories and archives
 certscan.build
 certscan.dist
+certscan*.zip
 
 # C extensions
 *.so
