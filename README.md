@@ -74,27 +74,37 @@ information.
 
 ### Python interpreter
 
-1. Download source
-2. In source directory run as `python main.py`
+```
+# clone certscan repo
+git clone git@github.com:ryancampbellclarke/certscan.git
 
-### Windows
+# change directory to cloned directory
+cd certscan
 
-#### Binary
+# run through python interperter with one of these depending on your installation
+python certscan.py
+```
+
+### Binary
 1. Download binary from [Releases page on Github](https://github.com/ryancampbellclarke/certscan/releases).
 2. Extract archive to installation folder
-3. [OPTIONAL] [Add the extracted folder to PATH](https://www.architectryan.com/2018/03/17/add-to-the-path-on-windows-10/)
-4. If you added to path, run with `certscan`. Otherwise, run `certscan.exe` from the installation folder or with the absolute path.
+3. Optional: [Add the extracted folder to PATH](https://www.architectryan.com/2018/03/17/add-to-the-path-on-windows-10/)
+4. If you added to path, run with `certscan`. Otherwise, run `certscan.exe` from the installation folder or with the absolute path to `certscan.exe`.
 
-## Build
+## Build binary
 
-### Windows
+Use nuitka to build binary:
 
-`python setup.py py2exe`
+```
+# clone certscan repo
+git clone git@github.com:ryancampbellclarke/certscan.git
 
-### MacOS
+# change directory to cloned directory
+cd certscan
 
-**NOTE:** On roadmap, not yet implemented. Issue #8
+# install requirements
+pip install -r requirements.txt
 
-### Linux
-
-**NOTE:** On roadmap, not yet implemented. Issue #7
+# build with nuitka
+python -m nuitka certscan.py --standalone
+```

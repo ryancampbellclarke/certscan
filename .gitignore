@@ -6,6 +6,10 @@ __pycache__/
 # SQLite db
 *.db
 
+# Nuitka build directories
+certscan.build
+certscan.dist
+
 # C extensions
 *.so
 
@@ -34,7 +38,6 @@ share/python-wheels/
 .installed.cfg
 *.egg
 MANIFEST
-dist.zip
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
