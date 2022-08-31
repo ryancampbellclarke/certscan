@@ -102,10 +102,8 @@ class Scanner:
         domains or ips
         """
         targets: List[ipaddress.ip_address] = []
-        if scan_method == ScanMethod.single:
-            # Append single IP to list
-            targets.append(str(ipaddress.ip_address(scan_target)))
-            return targets
+        if scan_method == ScanMethod.domains or scan_method == ScanMethod.single:
+            return [target for target in scan_target.split(',')]
         elif scan_method == ScanMethod.cidr:
             return [str(ip) for ip in ipaddress.IPv4Network(scan_target)]
         elif scan_method == ScanMethod.range:
@@ -119,8 +117,6 @@ class Scanner:
                 return targets
             except ValueError as e:
                 print(e)
-        elif scan_method == ScanMethod.domains:
-            return [domain for domain in scan_target.split(',')]
         return targets
 
     def __convert_port_scan_target_str_to_list(self, port_scan_target):

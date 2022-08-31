@@ -13,7 +13,9 @@ def scan_type_group(parser):
     """
     group = parser.add_mutually_exclusive_group()
     group.add_argument("-s", "--scan", type=str,
-                       help="Scan a single IP: 10.10.10.10, a range of IPs: "
+                       help="Scan a single IP: 10.10.10.10, a single domain:"
+                            " example.com,a list of IPs: 10.10.10.10,"
+                            "10.10.10.20,10.10.10.30, a range of IPs: "
                             "10.10.10.10-10.10.10.20, a range of IPs by CIDR "
                             "notation: 10.10.10.0/24, or a list of domains: "
                             "example.com,example.org,example.edu"

@@ -22,6 +22,8 @@ Run a scan by `-s` or `--scan` with one of the following strings:
 
 Single IP: `-s 10.10.10.10`
 
+List of IPs: `-s 10.10.10.10,10.10.10.20,10.10.10.30`
+
 Range of IPs: `-s 10.10.10.0-10.10.10.5`
 
 Range of IPs in CIDR notation: `-s 10.10.10.0/24`
