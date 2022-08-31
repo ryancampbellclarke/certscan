@@ -5,12 +5,8 @@ Certificate Scanner. Find certificates on your network.
 ## Contents
 
 * [Usage](#usage)
-  * [Single Scan](#single-scan)
-  * [Scheduled](#scheduled)
-* [Installation](#Installation)
-  * [Python interpreter](#python-interpreter)
-  * [Windows](#windows)
-* [Build](#build)
+* [Installation](#installation)
+* [Build Binary](#build-binary)
 
 ## Usage
 
