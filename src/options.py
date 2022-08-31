@@ -20,11 +20,6 @@ def scan_type_group(parser):
                             "notation: 10.10.10.0/24, or a list of domains: "
                             "example.com,example.org,example.edu"
                             "`,`")
-    group.add_argument("-d", "--database", action='store_true',
-                       help="Read scanner configuration from database defined "
-                            "in database.ini")
-    group.add_argument("-c", "--config", action='store_true',
-                       help="Read scanner configuration from config.ini")
     return parser
 
 
