@@ -14,22 +14,25 @@ from src.scanner import Scanner
 DEFAULT_OUTPUT_FOLDER = "output/"
 DEFAULT_FILE_OUT = f"{DEFAULT_OUTPUT_FOLDER}certificates.csv"
 
-
-def get_args(parser):
+def set_args(parser):
     """
-    Use scanners configured in database configured in database.ini file
+    Add argument groups, positional arguments, and optional arguments
     """
-    parser = argparse.ArgumentParser()
+    # Add groups of optional arguments that are mutually exclusive
     parser = options.port_scan_group(parser)
     parser = options.print_group(parser)
+
+    # Add positional argument for hostname/ip of target to be scanned
     parser.add_argument("scan_target", type=str,
-                       help="Target of discovery scan. "
-                            "Formats: Single IP: '10.10.10.10', "
-                            "Single domain: 'example.com', "
-                            "List of IPs: '10.10.10.10,10.10.10.20,10.10.10.30', "
-                            "Range of IPs: '10.10.10.10-10.10.10.20', "
-                            "Range of IPs by CIDR notation: '10.10.10.0/24', "
-                            "List of domains: 'example.com,example.org,example.edu'")
+                        help="Target of discovery scan. "
+                             "Formats: Single IP: '10.10.10.10', "
+                             "Single domain: 'example.com', "
+                             "List of IPs: '10.10.10.10,10.10.10.20,10.10.10.30', "
+                             "Range of IPs: '10.10.10.10-10.10.10.20', "
+                             "Range of IPs by CIDR notation: '10.10.10.0/24', "
+                             "List of domains: 'example.com,example.org,example.edu'")
+
+    # Optional arguments
     parser.add_argument("-o", "--output", nargs='?', const=DEFAULT_FILE_OUT,
                         help=f"Output discovered certificates to "
                              f"{DEFAULT_FILE_OUT}"
@@ -48,6 +51,7 @@ def dump_all_discovered_certs_in_json(discovered_certs):
     return json.dumps(
         [disc_cert.__dict__ for disc_cert in discovered_certs], indent=4,
         sort_keys=True, default=str)
+
 
 def certscan_direct(args):
     """
