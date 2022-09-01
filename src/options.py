@@ -68,7 +68,8 @@ def parse_port_scan_input(args):
 
 def parse_inputs(args):
     """
-
+    Parse arguments and set targets, ports and the method to use to generate
+    the target and port list
     """
     (scan_method, scan_target) = parse_scan_input(args)
     (port_scan_method, port_scan_target) = parse_port_scan_input(args)
