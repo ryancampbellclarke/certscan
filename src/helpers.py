@@ -23,7 +23,7 @@ def set_args(parser):
     parser = options.print_group(parser)
 
     # Add positional argument for hostname/ip of target to be scanned
-    parser.add_argument("scan_target", type=str,
+    parser.add_argument("scan_target", type=str, nargs='?',
                         help="Target of discovery scan. "
                              "Formats: Single IP: '10.10.10.10', "
                              "Single domain: 'example.com', "
