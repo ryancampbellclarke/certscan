@@ -12,7 +12,7 @@ Certificate Scanner. Find certificates on your network.
 ## Usage
 
 ```commandline
-usage: certscan.py [-h] [-p PORTS] [-q | -j] [-o [OUTPUT]] [-a] [-v] scan_target
+usage: certscan.py [-h] [-p PORTS] [-q | -j] [-o [OUTPUT]] [-a] [-v] [scan_target]
 
 positional arguments:
   scan_target           Target of discovery scan. Formats: Single IP: '10.10.10.10', Single domain: 'example.com', List of IPs: '10.10.10.10,10.10.10.20,10.10.10.30', Range of IPs: '10.10.10.10-10.10.10.20', Range of IPs by CIDR    
