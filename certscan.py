@@ -3,7 +3,7 @@ import sys
 
 from src.helpers import certscan_direct, set_args, print_args_help
 
-VERSION="v0.6.0"
+VERSION="v0.5.1"
 
 if __name__ == '__main__':
     # Setup argument parser
